@@ -15,6 +15,7 @@ import (
 	_ "github.com/huoxue1/leafBotPlugin/pluginPoke"
 	_ "github.com/huoxue1/leafBotPlugin/pluginQrCode"
 	_ "github.com/huoxue1/leafBotPlugin/pluginSearchImage"
+	_ "github.com/huoxue1/leafBotPlugin/pluginSmallTalk"
 	_ "github.com/huoxue1/leafBotPlugin/pluginTranslate"
 	_ "github.com/huoxue1/leafBotPlugin/pluginWebsite"
 	_ "github.com/huoxue1/leafBotPlugin/pluginWeibo"
