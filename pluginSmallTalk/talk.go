@@ -1,9 +1,12 @@
 package pluginSmallTalk
 
 import (
-	"github.com/guonaihong/gout"
+	"encoding/json"
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
+	log "github.com/sirupsen/logrus"
+	"io"
+	"net/http"
 	"net/url"
 	"strings"
 )
@@ -46,11 +49,26 @@ type res struct {
 
 func getTalk(data string) (res, error) {
 	encodeData := url.QueryEscape(data)
-	r := new(res)
-	err := gout.GET("http://api.qingyunke.com/api.php?key=free&appid=0&msg=" + encodeData).BindJSON(r).Err
+	r := res{}
+	resp, err := http.Get("http://api.qingyunke.com/api.php?key=free&appid=0&msg=" + encodeData)
 	if err != nil {
-		return *r, err
+		return res{}, err
+	}
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+
+		}
+	}(resp.Body)
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return res{}, err
+	}
+	err = json.Unmarshal(b, &r)
+	if err != nil {
+		return res{}, err
 	}
 	r.Content = strings.ReplaceAll(r.Content, "{br}", "\n")
-	return *r, err
+	log.Infoln(r.Content)
+	return r, err
 }
