@@ -9,6 +9,11 @@ func init() {
 	InitParse()
 }
 
+// InitParse
+/**
+ * @Description:
+ * example
+ */
 func InitParse() {
 	leafBot.OnCommand("decode").SetWeight(10).SetPluginName("消息解析").SetBlock(false).SetCD("default", 5).AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
 		bot.Send(event, message.Text("请在一分钟内发出需要解析的消息"))
