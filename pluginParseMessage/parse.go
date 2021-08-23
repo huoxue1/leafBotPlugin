@@ -29,4 +29,11 @@ func InitParse() {
 		}
 		bot.Send(event, message.Text(oneEvent.Message.CQString()))
 	})
+
+	leafBot.OnCommand("run").SetWeight(10).SetPluginName("cq码运行").SetBlock(false).AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+		if len(state.Args) < 1 {
+			return
+		}
+		bot.Send(event, message.ParseMessageFromString(state.Args[0]))
+	})
 }
