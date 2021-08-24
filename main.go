@@ -20,11 +20,12 @@ import (
 	_ "github.com/huoxue1/leafBotPlugin/pluginTranslate"
 	_ "github.com/huoxue1/leafBotPlugin/pluginWebsite"
 	_ "github.com/huoxue1/leafBotPlugin/pluginWeibo"
+
 	"runtime"
 )
 
 func init() {
-
+	leafBot.InitPluginManager()
 }
 
 func main() {

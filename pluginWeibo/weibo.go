@@ -45,7 +45,7 @@ func weiBoHandle(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
 	}
 	if len(state.Args) < 1 {
 		draw(50)
-		srcByte, err := ioutil.ReadFile("./plugins/weibo/weibo.png")
+		srcByte, err := ioutil.ReadFile("./config/weibo.png")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -132,7 +132,7 @@ func draw(limit int) {
 	for i, datum := range weibo.Data {
 		context.DrawString(strconv.Itoa(i+1)+"："+datum.HotWord+"  "+datum.HotWordNum, 0, float64(100*(i+1)))
 	}
-	err = context.SavePNG("./plugins/weibo/weibo.png")
+	err = context.SavePNG("./config/weibo.png")
 	if err != nil {
 		log.Debugln("图片保存失败")
 	}
