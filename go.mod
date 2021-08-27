@@ -7,7 +7,7 @@ require (
 	github.com/fogleman/gg v1.3.0
 	github.com/google/go-github/v35 v35.2.0
 	github.com/guonaihong/gout v0.2.4 // indirect
-	github.com/huoxue1/leafBot v1.0.25
+	github.com/huoxue1/leafBot v1.0.27-0.20210827114141-68e83e4a0629
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/mxschmitt/playwright-go v0.1100.0
 	github.com/shirou/gopsutil v3.21.4+incompatible
