@@ -85,17 +85,16 @@ func getResponseMsg(owner, resp string) (string, error) {
 
 		return "", err
 	}
-	msg := fmt.Sprintf("%v\nDescription: %v\nStar/Fork/Issue: %d / %d / %d\nLanguage: %v\nLicense: %v\nLastPushed: %v\nJump:%v\nRelease: %v",
+	msg := fmt.Sprintf("%v\nDescription: %v\nStar/Fork/Issue: %d / %d / %d\nLanguage: %v\nLicense: %v\nLastPushed: %v\nJump:%v",
 		repository.GetName(),
 		repository.GetDescription(),
 		repository.GetStargazersCount(),
 		repository.GetForksCount(),
 		repository.GetOpenIssuesCount(),
 		repository.GetLanguage(),
-		repository.GetLicense().String(),
+		repository.GetLicense().GetName(),
 		repository.GetPushedAt().Format("2006-01-02 15:04:05"),
-		repository.GetTreesURL(),
-		repository.GetReleasesURL())
+		"https://github.com"+repository.GetOwner().GetName()+"/"+repository.GetName())
 	return msg, err
 }
 
