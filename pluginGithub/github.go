@@ -79,22 +79,23 @@ func PluginInit() {
 		})
 }
 
-func getResponseMsg(ower, resp string) (string, error) {
-	repository, _, err := client.Repositories.Get(ctx, ower, resp)
+func getResponseMsg(owner, resp string) (string, error) {
+	repository, _, err := client.Repositories.Get(ctx, owner, resp)
 	if err != nil {
 
 		return "", err
 	}
-	msg := fmt.Sprintf("%v\nDescription: %v\nStar/Fork/Issue: %d / %d / %d\nLanguage: %v\nLicense: \nLastPushed: %v\nJump:%v",
+	msg := fmt.Sprintf("%v\nDescription: %v\nStar/Fork/Issue: %d / %d / %d\nLanguage: %v\nLicense: %v\nLastPushed: %v\nJump:%v\nRelease: %v",
 		repository.GetName(),
 		repository.GetDescription(),
 		repository.GetStargazersCount(),
 		repository.GetForksCount(),
 		repository.GetOpenIssuesCount(),
 		repository.GetLanguage(),
-		//repository.GetLicense().String(),
+		repository.GetLicense().String(),
 		repository.GetPushedAt().Format("2006-01-02 15:04:05"),
-		repository.GetURL())
+		repository.GetTreesURL(),
+		repository.GetReleasesURL())
 	return msg, err
 }
 
