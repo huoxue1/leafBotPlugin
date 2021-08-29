@@ -94,7 +94,7 @@ func getResponseMsg(owner, resp string) (string, error) {
 		repository.GetLanguage(),
 		repository.GetLicense().GetName(),
 		repository.GetPushedAt().Format("2006-01-02 15:04:05"),
-		"https://github.com"+repository.GetOwner().GetName()+"/"+repository.GetName())
+		"https://github.com/"+owner+"/"+resp)
 	return msg, err
 }
 
