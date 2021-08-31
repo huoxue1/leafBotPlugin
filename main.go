@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/huoxue1/leafBot"
+	"github.com/huoxue1/leafBot/utils"
 	"github.com/huoxue1/leafBotPlugin/plugin_gif"
 
 	// 导入插件
@@ -28,6 +29,7 @@ import (
 func init() {
 	leafBot.InitPluginManager()
 	plugin_gif.MoInit()
+	utils.PwInit()
 }
 
 func main() {

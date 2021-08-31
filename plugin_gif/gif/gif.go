@@ -62,3 +62,74 @@ func Chong(yuan string) string {
 	return "base64://" + base64.StdEncoding.EncodeToString(file)
 
 }
+
+// Qiao 敲
+func Qiao(yuan string) string {
+	tou := img.ImDc(yuan, 40, 40).Circle(0).Im
+	qiao := []*image.NRGBA{
+		img.ImDc("https://specialblog.link/img/202108310832160.png", 0, 0).Over(tou, 40, 33, 57, 52).Im,
+		img.ImDc("https://specialblog.link/img/202108310833855.png", 0, 0).Over(tou, 38, 36, 58, 50).Im,
+	}
+	img.SaveGif(img.AndGif(1, qiao), `./tmp/qiao.gif`)
+	file, _ := ioutil.ReadFile("./tmp/qiao.gif")
+	return "base64://" + base64.StdEncoding.EncodeToString(file)
+
+}
+
+// Chi 吃
+func Chi(yuan string) string {
+	tou := img.ImDc(yuan, 32, 32).Im
+	chi := []*image.NRGBA{
+		img.ImDc(`https://specialblog.link/img/202108310834234.png`, 0, 0).DstOver(tou, 0, 0, 1, 38).Im,
+		img.ImDc(`https://specialblog.link/img/202108310835450.png`, 0, 0).DstOver(tou, 0, 0, 1, 38).Im,
+		img.ImDc(`https://specialblog.link/img/202108310835334.png`, 0, 0).DstOver(tou, 0, 0, 1, 38).Im,
+	}
+	img.SaveGif(img.AndGif(1, chi), `./tmp/chi.gif`)
+	file, _ := ioutil.ReadFile("./tmp/chi.gif")
+	return "base64://" + base64.StdEncoding.EncodeToString(file)
+
+}
+
+// Ken 啃
+func Ken(yuan string) string {
+	tou := img.ImDc(yuan, 100, 100).Im
+	ken := []*image.NRGBA{
+		img.ImDc(`https://specialblog.link/img/202108310837227.png`, 0, 0).DstOver(tou, 90, 90, 105, 150).Im,
+		img.ImDc(`https://specialblog.link/img/202108310837952.png`, 0, 0).DstOver(tou, 90, 83, 96, 172).Im,
+		img.ImDc(`https://specialblog.link/img/202108310837395.png`, 0, 0).DstOver(tou, 90, 90, 106, 148).Im,
+		img.ImDc(`https://specialblog.link/img/202108310837300.png`, 0, 0).DstOver(tou, 88, 88, 97, 167).Im,
+		img.ImDc(`https://specialblog.link/img/202108310837018.png`, 0, 0).DstOver(tou, 90, 85, 89, 179).Im,
+		img.ImDc(`https://specialblog.link/img/202108310838345.png`, 0, 0).DstOver(tou, 90, 90, 106, 151).Im,
+		img.ImDc(`https://specialblog.link/img/202108310838187.png`, 0, 0).Im,
+		img.ImDc(`https://specialblog.link/img/202108310838744.png`, 0, 0).Im,
+		img.ImDc(`https://specialblog.link/img/202108310838474.png`, 0, 0).Im,
+		img.ImDc(`https://specialblog.link/img/202108310839005.png`, 0, 0).Im,
+		img.ImDc(`https://specialblog.link/img/202108310839045.png`, 0, 0).Im,
+		img.ImDc(`https://specialblog.link/img/202108310839277.png`, 0, 0).Im,
+		img.ImDc(`https://specialblog.link/img/202108310839469.png`, 0, 0).Im,
+		img.ImDc(`https://specialblog.link/img/202108310839053.png`, 0, 0).Im,
+		img.ImDc(`https://specialblog.link/img/202108310840342.png`, 0, 0).Im,
+		img.ImDc(`https://specialblog.link/img/202108310840353.png`, 0, 0).Im,
+	}
+	img.SaveGif(img.AndGif(1, ken), `./tmp/ken.gif`)
+	file, _ := ioutil.ReadFile("./tmp/ken.gif")
+	return "base64://" + base64.StdEncoding.EncodeToString(file)
+}
+
+//丢
+func Diu(yuan string) string {
+	tou := img.ImDc(yuan, 0, 0).Circle(0).Im
+	diu := []*image.NRGBA{
+		img.ImDc(`https://specialblog.link/img/202108310841642.png`, 0, 0).Over(tou, 32, 32, 108, 36).Im,
+		img.ImDc(`https://specialblog.link/img/202108310842904.png`, 0, 0).Over(tou, 32, 32, 122, 36).Im,
+		img.ImDc(`https://specialblog.link/img/202108310842900.png`, 0, 0).Im,
+		img.ImDc(`https://specialblog.link/img/202108310842208.png`, 0, 0).Over(tou, 123, 123, 19, 129).Im,
+		img.ImDc(`https://specialblog.link/img/202108310842901.png`, 0, 0).Over(tou, 185, 185, -50, 200).Over(tou, 33, 33, 289, 70).Im,
+		img.ImDc(`https://specialblog.link/img/202108310842617.png`, 0, 0).Over(tou, 32, 32, 280, 73).Im,
+		img.ImDc(`https://specialblog.link/img/202108310842548.png`, 0, 0).Over(tou, 35, 35, 259, 31).Im,
+		img.ImDc(`https://specialblog.link/img/202108310843795.png`, 0, 0).Over(tou, 175, 175, -50, 220).Im,
+	}
+	img.SaveGif(img.AndGif(1, diu), `./tmp/diu.gif`)
+	file, _ := ioutil.ReadFile("./tmp/diu.gif")
+	return "base64://" + base64.StdEncoding.EncodeToString(file)
+}

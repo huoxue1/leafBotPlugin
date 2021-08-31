@@ -16,6 +16,10 @@ var (
 		"搓": gif.Cuo,
 		"冲": gif.Chong,
 		"拍": gif.Pai,
+		"敲": gif.Qiao,
+		"吃": gif.Chi,
+		"啃": gif.Ken,
+		"丢": gif.Diu,
 	}
 )
 
