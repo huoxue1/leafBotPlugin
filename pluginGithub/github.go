@@ -4,6 +4,7 @@ import (
 	"fmt" //nolint:gci
 	"github.com/google/go-github/v35/github"
 	"github.com/huoxue1/leafBot"
+	"github.com/huoxue1/leafBot/message"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
@@ -75,7 +76,12 @@ func PluginInit() {
 			if err != nil {
 				bot.Send(event, "仓库获取失败"+err.Error())
 			}
-			bot.Send(event, msg)
+			bot.Send(event, []message.MessageSegment{
+				message.Text(msg),
+				message.Image(
+					fmt.Sprintf("https://opengraph.githubassets.com/0/%v/%v",
+						strings.Split(state.Args[0], "/")[0],
+						strings.Split(state.Args[0], "/")[1]))})
 		})
 }
 
