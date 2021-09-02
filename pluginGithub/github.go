@@ -81,7 +81,7 @@ func PluginInit() {
 				message.Image(
 					fmt.Sprintf("https://opengraph.githubassets.com/0/%v/%v",
 						strings.Split(state.Args[0], "/")[0],
-						strings.Split(state.Args[0], "/")[1]))})
+						strings.Split(state.Args[0], "/")[1])).Add("cache", "0")})
 		})
 }
 

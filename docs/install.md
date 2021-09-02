@@ -1,4 +1,4 @@
-### 1. 下载最新<a href="https://github.com/huoxue1/leafBotPlugin/releases">leaftBot</a>可执行文件
+### 1. 下载最新<a href="https://github.com/huoxue1/leafBotPlugin/releases">leaftBotPlugin</a>可执行文件
 双击运行按照提示输入qq号，会自动生产LeafBot的配置文件和gocq的配置文件
 #### ps: LeaftBot配置文件为: config.json
 ####      go-cqhttp的配置文件为config.yml
