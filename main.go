@@ -4,6 +4,7 @@ import (
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/utils"
 	"github.com/huoxue1/leafBotPlugin/plugin_gif"
+	log "github.com/sirupsen/logrus"
 
 	// 导入插件
 	_ "github.com/huoxue1/leafBotPlugin/pluginBlackList"
@@ -26,15 +27,18 @@ import (
 	"runtime"
 )
 
+var VERSION string
+
 func init() {
 	leafBot.InitPluginManager()
 	plugin_gif.MoInit()
-	utils.PwInit()
+	go utils.PwInit()
 }
 
 func main() {
 	if runtime.GOOS == "windows" {
 		go leafBot.InitWindow()
 	}
+	log.Infoln("当前版本--" + VERSION)
 	leafBot.InitBots()
 }

@@ -28,8 +28,8 @@ builds:
     mod_timestamp: "{{ .CommitTimestamp }}"
     flags:
       - -trimpath
-#    ldflags:
-#      - -s -w -X github.com/Mrs4s/go-cqhttp/coolq.Version=v{{.Version}}
+    ldflags:
+      - -s -w -X main.VERSION=v{{.Version}}
   - id: win
     main: main.go
     env:
@@ -46,8 +46,8 @@ builds:
     mod_timestamp: "{{ .CommitTimestamp }}"
     flags:
       - -trimpath
-#    ldflags:
-#
+    ldflags:
+      - -s -w -X main.VERSION=v{{.Version}}
 
 checksum:
   name_template: "{{ .ProjectName }}_checksums.txt"
