@@ -23,11 +23,9 @@ import (
 	_ "github.com/huoxue1/leafBotPlugin/pluginTranslate"
 	_ "github.com/huoxue1/leafBotPlugin/pluginWebsite"
 	_ "github.com/huoxue1/leafBotPlugin/pluginWeibo"
-
-	"runtime"
 )
 
-var VERSION string
+var VERSION = "UnKnow"
 
 func init() {
 	leafBot.InitPluginManager()
@@ -36,9 +34,7 @@ func init() {
 }
 
 func main() {
-	if runtime.GOOS == "windows" {
-		go leafBot.InitWindow()
-	}
-	log.Infoln("当前版本--" + VERSION)
+	go leafBot.InitWindow()
+	log.Infoln("当前版本>>>>>>>>  " + VERSION)
 	leafBot.InitBots()
 }
