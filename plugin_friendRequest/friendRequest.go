@@ -14,6 +14,10 @@ func friendRequest() {
 				return
 			}
 		}
+		if len(leafBot.DefaultConfig.Plugins.AutoPassFriendRequest) == 0 {
+			bot.SetFriendAddRequest(event.Flag, true, "")
+			return
+		}
 		bot.SetFriendAddRequest(event.Flag, false, "")
 	})
 }
