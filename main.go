@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"github.com/huoxue1/leafBot"
-	"github.com/huoxue1/leafBot/utils"
 	"github.com/huoxue1/leafBotPlugin/global"
 	log "github.com/sirupsen/logrus"
 	"os"
@@ -62,7 +61,6 @@ func main() {
 		}
 		os.Exit(3)
 	}
-	go utils.PwInit()
 	go leafBot.InitWindow()
 
 	leafBot.InitBots()
