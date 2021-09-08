@@ -5,10 +5,8 @@ import (
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/utils"
 	"github.com/huoxue1/leafBotPlugin/global"
-	"github.com/huoxue1/leafBotPlugin/plugin_gif"
 	log "github.com/sirupsen/logrus"
 	"os"
-
 	// 导入插件
 	_ "github.com/huoxue1/leafBotPlugin/pluginBlackList"
 	_ "github.com/huoxue1/leafBotPlugin/pluginDayImage"
@@ -26,6 +24,9 @@ import (
 	_ "github.com/huoxue1/leafBotPlugin/pluginTranslate"
 	_ "github.com/huoxue1/leafBotPlugin/pluginWebsite"
 	_ "github.com/huoxue1/leafBotPlugin/pluginWeibo"
+	_ "github.com/huoxue1/leafBotPlugin/plugin_fakeMsg"
+
+	"github.com/huoxue1/leafBotPlugin/plugin_gif"
 )
 
 var VERSION = "UnKnow"
