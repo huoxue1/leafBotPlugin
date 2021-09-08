@@ -27,7 +27,6 @@ jobs:
         env:
 #          main: ./example/main.go
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-
       #- name: Checkout Dist
       #  uses: actions/checkout@v2
       #  with:

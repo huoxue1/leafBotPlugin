@@ -5,6 +5,7 @@ import (
 	"github.com/guonaihong/gout"
 	log "github.com/sirupsen/logrus"
 	"github.com/tidwall/gjson"
+	"io/ioutil"
 	"runtime"
 	"strconv"
 	"strings"
@@ -24,11 +25,21 @@ func Update() error {
 		if err != nil {
 			return err
 		}
+		err = ioutil.WriteFile("./leafBotPlugin_windows_"+version+"_amd64.exe", content, 0666)
+		if err != nil {
+			log.Errorln("写入到文件错误" + "》》》》更新失败")
+		}
+		return err
 	case "linux":
 		err := gout.GET(fmt.Sprintf("https://github.com/huoxue1/leafBotPlugin/releases/download/%v/leafBotPlugin_windows_amd64.exe", version)).BindBody(&content).Do()
 		if err != nil {
 			return err
 		}
+		err = ioutil.WriteFile("./leafBotPlugin_linux_"+version+"_amd64", content, 0666)
+		if err != nil {
+			log.Errorln("写入到文件错误" + "》》》》更新失败")
+		}
+		return err
 	}
 
 	return err
