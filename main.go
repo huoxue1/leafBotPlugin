@@ -25,6 +25,7 @@ import (
 	_ "github.com/huoxue1/leafBotPlugin/pluginWebsite"
 	_ "github.com/huoxue1/leafBotPlugin/pluginWeibo"
 	_ "github.com/huoxue1/leafBotPlugin/plugin_fakeMsg"
+	_ "github.com/huoxue1/leafBotPlugin/plugin_friendRequest"
 
 	"github.com/huoxue1/leafBotPlugin/plugin_gif"
 )
