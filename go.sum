@@ -160,6 +160,8 @@ github.com/huoxue1/leafBot v1.0.27-0.20210908150538-2081e0fdb7fd h1:GYKBk1O6aty1
 github.com/huoxue1/leafBot v1.0.27-0.20210908150538-2081e0fdb7fd/go.mod h1:j89y4KjO7a/+hs6F5/pcHrU3bKuzNRyHTrtKyZNBFJM=
 github.com/huoxue1/leafBot v1.0.27-0.20210909034345-9e7234c33596 h1:W7qVD4/+9EbEFIHYI2QP229d07rvAMBVsX+nze2QMAg=
 github.com/huoxue1/leafBot v1.0.27-0.20210909034345-9e7234c33596/go.mod h1:pR2ZZ3MlSzAR0fXPUmPn+HYu2GIGKqCSMc/yhQhq/tw=
+github.com/huoxue1/leafBot v1.1.0 h1:ZWKLSsnpQLhOrLqMfWdneVliIAkwVVNDzfalPxLHDTs=
+github.com/huoxue1/leafBot v1.1.0/go.mod h1:pR2ZZ3MlSzAR0fXPUmPn+HYu2GIGKqCSMc/yhQhq/tw=
 github.com/huoxue1/lorca v0.1.11 h1:B5x4Xta8rauGCERoCHY7nWg2z1GUrksf9ycZGHwLs4Q=
 github.com/huoxue1/lorca v0.1.11/go.mod h1:eEI3aGkmMladREqFJwUhd8cLlSUgG13wvuNprVjaVaY=
 github.com/ianlancetaylor/demangle v0.0.0-20181102032728-5e5cf60278f6/go.mod h1:aSSvb/t6k1mPoxDqO4vJh6VOCGPwU4O0C2/Eqndh1Sc=

@@ -31,7 +31,7 @@ func Update() error {
 		}
 		return err
 	case "linux":
-		err := gout.GET(fmt.Sprintf("https://github.com/huoxue1/leafBotPlugin/releases/download/%v/leafBotPlugin_windows_amd64.exe", version)).BindBody(&content).Do()
+		err := gout.GET(fmt.Sprintf("https://github.com/huoxue1/leafBotPlugin/releases/download/%v/leafBotPlugin_linux_amd64", version)).BindBody(&content).Do()
 		if err != nil {
 			return err
 		}
