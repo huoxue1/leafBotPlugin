@@ -79,6 +79,6 @@ func getImage(text string) ([]byte, error) {
 		return nil, err
 	}
 
-	return result, err
+	return buffer.Bytes(), err
 
 }
