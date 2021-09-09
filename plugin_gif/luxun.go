@@ -13,11 +13,15 @@ import (
 	"strings"
 )
 
-//go:embed NotoSansBold.ttf
 var font []byte
 
 func init() {
 	LuXun()
+
+	err := gout.GET("https://specialblog.link/img/202109091139659.ttf").BindBody(&font).Do()
+	if err == nil {
+		log.Infoln("加载字体文件成功")
+	}
 }
 
 func LuXun() {
