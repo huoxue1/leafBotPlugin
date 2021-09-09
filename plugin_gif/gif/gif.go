@@ -1,10 +1,12 @@
 package gif
 
 import (
+	"bytes"
 	"encoding/base64"
+	log "github.com/sirupsen/logrus"
 	"github.com/tdf1939/img"
 	"image"
-	"io/ioutil"
+	"image/gif"
 )
 
 func Mo(yuan string) string {
@@ -17,9 +19,14 @@ func Mo(yuan string) string {
 		img.ImDc("https://specialblog.link/img/202108272130451.png", 0, 0).DstOver(im, 85, 75, 27, 37).Im,
 		img.ImDc("https://specialblog.link/img/202108272130890.png", 0, 0).DstOver(im, 90, 70, 22, 42).Im,
 	}
-	img.SaveGif(img.AndGif(1, mo), "./tmp/mo.gif")
-	file, _ := ioutil.ReadFile("./tmp/mo.gif")
-	return "base64://" + base64.StdEncoding.EncodeToString(file)
+
+	var result []byte
+	buffer := bytes.NewBuffer(result)
+	err := gif.EncodeAll(buffer, img.AndGif(1, mo))
+	if err != nil {
+		log.Panicln("生成图片出现错误")
+	}
+	return "base64://" + base64.StdEncoding.EncodeToString(buffer.Bytes())
 }
 
 func Cuo(yuan string) string {
@@ -35,9 +42,13 @@ func Cuo(yuan string) string {
 		img.ImDc("https://specialblog.link/img/202108272145718.png", 0, 0).DstOverC(m3.Im, 0, 0, 75, 130).Im,
 		img.ImDc("https://specialblog.link/img/202108272145323.png", 0, 0).DstOverC(m4.Im, 0, 0, 75, 130).Im,
 	}
-	img.SaveGif(img.AndGif(5, cuo), "./tmp/cuo.gif")
-	file, _ := ioutil.ReadFile("./tmp/cuo.gif")
-	return "base64://" + base64.StdEncoding.EncodeToString(file)
+	var result []byte
+	buffer := bytes.NewBuffer(result)
+	err := gif.EncodeAll(buffer, img.AndGif(5, cuo))
+	if err != nil {
+		log.Panicln("生成图片出现错误")
+	}
+	return "base64://" + base64.StdEncoding.EncodeToString(buffer.Bytes())
 }
 
 func Pai(yuan string) string {
@@ -46,9 +57,13 @@ func Pai(yuan string) string {
 		img.ImDc("https://specialblog.link/img/202108272203655.png", 0, 0).Over(tou, 0, 0, 1, 47).Im,
 		img.ImDc("https://specialblog.link/img/202108272203063.png", 0, 0).Over(tou, 0, 0, 1, 67).Im,
 	}
-	img.SaveGif(img.AndGif(1, pai), "./tmp/pai.gif")
-	file, _ := ioutil.ReadFile("./tmp/pai.gif")
-	return "base64://" + base64.StdEncoding.EncodeToString(file)
+	var result []byte
+	buffer := bytes.NewBuffer(result)
+	err := gif.EncodeAll(buffer, img.AndGif(1, pai))
+	if err != nil {
+		log.Panicln("生成图片出现错误")
+	}
+	return "base64://" + base64.StdEncoding.EncodeToString(buffer.Bytes())
 }
 
 func Chong(yuan string) string {
@@ -57,9 +72,13 @@ func Chong(yuan string) string {
 		img.ImDc("https://specialblog.link/img/202108272205152.png", 0, 0).Over(tou, 30, 30, 15, 53).Im,
 		img.ImDc("https://specialblog.link/img/202108272205307.png", 0, 0).Over(tou, 30, 30, 40, 53).Im,
 	}
-	img.SaveGif(img.AndGif(1, chong), "./tmp/chong.gif")
-	file, _ := ioutil.ReadFile("./tmp/chong.gif")
-	return "base64://" + base64.StdEncoding.EncodeToString(file)
+	var result []byte
+	buffer := bytes.NewBuffer(result)
+	err := gif.EncodeAll(buffer, img.AndGif(1, chong))
+	if err != nil {
+		log.Panicln("生成图片出现错误")
+	}
+	return "base64://" + base64.StdEncoding.EncodeToString(buffer.Bytes())
 
 }
 
@@ -70,9 +89,13 @@ func Qiao(yuan string) string {
 		img.ImDc("https://specialblog.link/img/202108310832160.png", 0, 0).Over(tou, 40, 33, 57, 52).Im,
 		img.ImDc("https://specialblog.link/img/202108310833855.png", 0, 0).Over(tou, 38, 36, 58, 50).Im,
 	}
-	img.SaveGif(img.AndGif(1, qiao), `./tmp/qiao.gif`)
-	file, _ := ioutil.ReadFile("./tmp/qiao.gif")
-	return "base64://" + base64.StdEncoding.EncodeToString(file)
+	var result []byte
+	buffer := bytes.NewBuffer(result)
+	err := gif.EncodeAll(buffer, img.AndGif(1, qiao))
+	if err != nil {
+		log.Panicln("生成图片出现错误")
+	}
+	return "base64://" + base64.StdEncoding.EncodeToString(buffer.Bytes())
 
 }
 
@@ -84,9 +107,13 @@ func Chi(yuan string) string {
 		img.ImDc(`https://specialblog.link/img/202108310835450.png`, 0, 0).DstOver(tou, 0, 0, 1, 38).Im,
 		img.ImDc(`https://specialblog.link/img/202108310835334.png`, 0, 0).DstOver(tou, 0, 0, 1, 38).Im,
 	}
-	img.SaveGif(img.AndGif(1, chi), `./tmp/chi.gif`)
-	file, _ := ioutil.ReadFile("./tmp/chi.gif")
-	return "base64://" + base64.StdEncoding.EncodeToString(file)
+	var result []byte
+	buffer := bytes.NewBuffer(result)
+	err := gif.EncodeAll(buffer, img.AndGif(1, chi))
+	if err != nil {
+		log.Panicln("生成图片出现错误")
+	}
+	return "base64://" + base64.StdEncoding.EncodeToString(buffer.Bytes())
 
 }
 
@@ -111,9 +138,13 @@ func Ken(yuan string) string {
 		img.ImDc(`https://specialblog.link/img/202108310840342.png`, 0, 0).Im,
 		img.ImDc(`https://specialblog.link/img/202108310840353.png`, 0, 0).Im,
 	}
-	img.SaveGif(img.AndGif(1, ken), `./tmp/ken.gif`)
-	file, _ := ioutil.ReadFile("./tmp/ken.gif")
-	return "base64://" + base64.StdEncoding.EncodeToString(file)
+	var result []byte
+	buffer := bytes.NewBuffer(result)
+	err := gif.EncodeAll(buffer, img.AndGif(1, ken))
+	if err != nil {
+		log.Panicln("生成图片出现错误")
+	}
+	return "base64://" + base64.StdEncoding.EncodeToString(buffer.Bytes())
 }
 
 //丢
@@ -129,7 +160,11 @@ func Diu(yuan string) string {
 		img.ImDc(`https://specialblog.link/img/202108310842548.png`, 0, 0).Over(tou, 35, 35, 259, 31).Im,
 		img.ImDc(`https://specialblog.link/img/202108310843795.png`, 0, 0).Over(tou, 175, 175, -50, 220).Im,
 	}
-	img.SaveGif(img.AndGif(1, diu), `./tmp/diu.gif`)
-	file, _ := ioutil.ReadFile("./tmp/diu.gif")
-	return "base64://" + base64.StdEncoding.EncodeToString(file)
+	var result []byte
+	buffer := bytes.NewBuffer(result)
+	err := gif.EncodeAll(buffer, img.AndGif(1, diu))
+	if err != nil {
+		log.Panicln("生成图片出现错误")
+	}
+	return "base64://" + base64.StdEncoding.EncodeToString(buffer.Bytes())
 }
