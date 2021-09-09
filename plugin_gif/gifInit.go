@@ -1,4 +1,4 @@
-// Package plugin_gif
+//Package plugin_gif
 // 该插件来源于 https://github.com/tdf1939/ZeroBot-Plugin-Gif
 ///*
 package plugin_gif

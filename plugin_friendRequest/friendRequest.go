@@ -1,4 +1,4 @@
-package pluginFriendRequest
+package pluginfriendRequest
 
 import "github.com/huoxue1/leafBot"
 
