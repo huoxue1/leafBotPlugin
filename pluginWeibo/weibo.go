@@ -5,7 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/fogleman/gg"
+	"github.com/huoxue1/gg"
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
 	"github.com/huoxue1/leafBot/utils"

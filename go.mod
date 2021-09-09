@@ -9,7 +9,7 @@ require (
 	github.com/ericpauley/go-quantize v0.0.0-20200331213906-ae555eb2afa4 // indirect
 	github.com/google/go-github/v35 v35.2.0
 	github.com/guonaihong/gout v0.2.6
-	github.com/huoxue1/gg v1.3.1-0.20210909025831-836d8040c759 // indirect
+	github.com/huoxue1/gg v1.3.1-0.20210909025831-836d8040c759
 	github.com/huoxue1/leafBot v1.0.27-0.20210908150538-2081e0fdb7fd
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/mxschmitt/playwright-go v0.1100.0
