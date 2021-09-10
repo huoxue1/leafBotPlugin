@@ -234,6 +234,7 @@ func UseMusicHandle() {
 		SetWeight(10).
 		AddAllies("查询歌曲").
 		SetBlock(false).
+		AddRule(leafBot.OnlyToMe).
 		AddHandle(
 			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
 				switch len(state.Args) {
