@@ -5,7 +5,8 @@ import (
 	"github.com/guonaihong/gout"
 	log "github.com/sirupsen/logrus"
 	"github.com/tidwall/gjson"
-	"io/ioutil"
+	"io"
+	"os"
 	"runtime"
 	"strconv"
 	"strings"
@@ -18,30 +19,49 @@ func Update() error {
 		return err
 	}
 	version := gjson.Get(data, "tag_name").Str
-	var content []byte
+	log.Infoln("正在开始更新——————————————")
 	switch runtime.GOOS {
 	case "windows":
-		err := gout.GET(fmt.Sprintf("https://github.com/huoxue1/leafBotPlugin/releases/download/%v/leafBotPlugin_windows_amd64.exe", version)).BindBody(&content).Do()
+		response, err := gout.GET(fmt.Sprintf("https://github.com/huoxue1/leafBotPlugin/releases/download/%v/leafBotPlugin_windows_amd64.exe", version)).Response()
 		if err != nil {
 			return err
 		}
-		err = ioutil.WriteFile("./leafBotPlugin_windows_"+version+"_amd64.exe", content, 0666)
+		file, err := os.OpenFile("./leafBotPlugin_windows_"+version+"_amd64.exe", os.O_RDWR|os.O_CREATE, 0666)
 		if err != nil {
-			log.Errorln("写入到文件错误" + "》》》》更新失败")
+			return err
+		}
+		defer func() {
+			file.Close()
+			response.Body.Close()
+		}()
+		bar := &Bar{}
+		bar.NewOption(0, response.ContentLength, response.Body)
+		_, err = io.Copy(file, bar)
+		if err != nil {
+			return err
 		}
 		return err
 	case "linux":
-		err := gout.GET(fmt.Sprintf("https://github.com/huoxue1/leafBotPlugin/releases/download/%v/leafBotPlugin_linux_amd64", version)).BindBody(&content).Do()
+		response, err := gout.GET(fmt.Sprintf("https://github.com/huoxue1/leafBotPlugin/releases/download/%v/leafBotPlugin_linux_amd64.exe", version)).Response()
 		if err != nil {
 			return err
 		}
-		err = ioutil.WriteFile("./leafBotPlugin_linux_"+version+"_amd64", content, 0666)
+		file, err := os.OpenFile("./leafBotPlugin_linux_"+version+"_amd64.exe", os.O_RDWR|os.O_CREATE, 0666)
 		if err != nil {
-			log.Errorln("写入到文件错误" + "》》》》更新失败")
+			return err
+		}
+		defer func() {
+			file.Close()
+			response.Body.Close()
+		}()
+		bar := &Bar{}
+		bar.NewOption(0, response.ContentLength, response.Body)
+		_, err = io.Copy(file, bar)
+		if err != nil {
+			return err
 		}
 		return err
 	}
-
 	return err
 }
 
