@@ -11,7 +11,7 @@ func init() {
 }
 
 func InitBanPlugin() {
-	leafBot.OnCommand("/ban").
+	plugin.OnCommand("/ban").
 		AddRule(leafBot.OnlySuperUser).
 		SetBlock(false).
 		AddAllies("禁言").

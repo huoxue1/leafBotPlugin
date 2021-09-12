@@ -229,7 +229,13 @@ func UseMusicHandle() {
 		if i != nil {
 		}
 	}()
-	leafBot.OnCommand("/music").
+
+	plugin := leafBot.NewPlugin("点歌")
+	plugin.SetHelp(map[string]string{
+		"music":      "歌曲搜索",
+		"orderMusic": "点歌",
+	})
+	plugin.OnCommand("music").
 		SetPluginName("查询歌曲").
 		SetWeight(10).
 		AddAllies("查询歌曲").
@@ -299,7 +305,7 @@ func UseMusicHandle() {
 				}
 			})
 
-	leafBot.OnCommand("/orderMusic").
+	plugin.OnCommand("orderMusic").
 		SetWeight(10).
 		SetPluginName("点歌").
 		AddAllies("点歌").

@@ -12,7 +12,12 @@ func init() {
 }
 
 func InitImage() {
-	leafBot.OnCommand("搜图").SetPluginName("搜图").SetWeight(10).SetBlock(false).AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+
+	plugin := leafBot.NewPlugin("图片搜索")
+	plugin.SetHelp(map[string]string{
+		"搜图": "图片搜索",
+	})
+	plugin.OnCommand("搜图").SetPluginName("搜图").SetWeight(10).SetBlock(false).AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
 		images, err := SearchImage(state.Args[0])
 		if err != nil {
 			bot.Send(event, message.Text("接口报错了"+err.Error()))

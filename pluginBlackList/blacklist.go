@@ -48,6 +48,13 @@ func InitBlackList(filePath string) {
 		return
 	}
 
+	plugin := leafBot.NewPlugin("黑名单管理")
+	plugin.SetHelp(map[string]string{
+		"/add_blackList_user":  "添加黑名单用户",
+		"/add_blackList_group": "添加黑名单群组",
+		"/get_blackList":       "获取黑名单列表",
+	})
+
 	leafBot.OnPretreatment().SetPluginName("黑名单预处理").SetWeight(10).AddHandle(func(event leafBot.Event, bot *leafBot.Bot) bool {
 		for _, user := range BlackList.Users {
 			if user == event.UserId {

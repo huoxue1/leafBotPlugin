@@ -30,7 +30,9 @@ func init() {
 		}
 	}
 
-	leafBot.OnCommand("/weibo").
+	plugin := leafBot.NewPlugin("微博热搜")
+
+	plugin.OnCommand("/weibo").
 		AddAllies("热搜").
 		SetWeight(10).
 		SetBlock(false).

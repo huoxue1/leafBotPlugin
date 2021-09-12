@@ -16,7 +16,9 @@ func init() {
 }
 
 func InitSmallTalk() {
-	leafBot.OnCommand("开启闲聊").SetPluginName("闲聊开启插件").SetBlock(false).SetWeight(1).AddRule(leafBot.OnlyToMe).AddHandle(
+	plugin := leafBot.NewPlugin("智障闲聊")
+	plugin.SetHelp(map[string]string{"开启闲聊": "进入闲聊模式"})
+	plugin.OnCommand("开启闲聊").SetPluginName("闲聊开启插件").SetBlock(false).SetWeight(1).AddRule(leafBot.OnlyToMe).AddHandle(
 		func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
 			bot.Send(event, message.Text("闲聊开启成功,输入关闭闲聊即可退出闲聊模式"))
 			var data string

@@ -25,7 +25,17 @@ var (
 
 func MoInit() {
 
-	leafBot.OnMessage("group").SetWeight(10).SetPluginName("gif").AddRule(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) bool {
+	plugin := leafBot.NewPlugin("搞笑gif")
+	plugin.SetHelp(map[string]string{
+		"摸": "",
+		"搓": "",
+		"冲": "",
+		"拍": "",
+		"敲": "",
+		"吃": "",
+		"啃": "",
+		"丢": ""})
+	plugin.OnMessage("group").SetWeight(10).SetPluginName("gif").AddRule(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) bool {
 		for s, _ := range m {
 			if event.Message[0].Type == "text" && event.Message[0].Data["text"] == s {
 				state.Data["type"] = event.Message[0].Data["text"]

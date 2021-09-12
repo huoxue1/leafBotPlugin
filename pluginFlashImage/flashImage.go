@@ -16,7 +16,8 @@ func init() {
 	会向提供的qq号进行转发该闪照
 */
 func UseFlashImage(userID int) {
-	leafBot.OnMessage("").SetPluginName("闪照拦截").AddRule(FlashMessageRule).AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+	plugin := leafBot.NewPlugin("闪照获取")
+	plugin.OnMessage("").SetPluginName("闪照拦截").AddRule(FlashMessageRule).AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
 		if userID == 0 {
 			userID = leafBot.DefaultConfig.Admin
 		}

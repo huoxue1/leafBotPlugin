@@ -6,11 +6,16 @@ import (
 	"strconv"
 )
 
+var (
+	plugin *leafBot.Plugin
+)
+
 func init() {
 	Init()
+	plugin = leafBot.NewPlugin("q群管理")
 }
 func Init() {
-	leafBot.OnRegex(`^升为管理.*?qq=(\d+)`).
+	plugin.OnRegex(`^升为管理.*?qq=(\d+)`).
 		SetPluginName("群管系统-设置管理").
 		SetBlock(false).
 		AddRule(leafBot.OnlySuperUser).
@@ -27,7 +32,7 @@ func Init() {
 				bot.Send(event, message.Text(nickName+"升为了管理！"))
 			})
 
-	leafBot.OnRegex(`^取消管理.*?qq=(\d+)`).
+	plugin.OnRegex(`^取消管理.*?qq=(\d+)`).
 		SetPluginName("群管系统-取消管理").
 		SetBlock(false).
 		AddRule(leafBot.OnlySuperUser).
@@ -45,7 +50,7 @@ func Init() {
 			},
 		)
 
-	leafBot.OnRegex(`^踢出群聊.*?qq=(\d+)`).
+	plugin.OnRegex(`^踢出群聊.*?qq=(\d+)`).
 		SetPluginName("群管系统-踢出群聊").
 		SetBlock(false).
 		AddRule(leafBot.OnlySuperUser).
@@ -63,7 +68,7 @@ func Init() {
 			},
 		)
 
-	leafBot.OnRegex(`^退出群聊.*?(\d+)`).
+	plugin.OnRegex(`^退出群聊.*?(\d+)`).
 		SetPluginName("群管系统-退出群聊").
 		SetBlock(false).
 		AddRule(leafBot.OnlySuperUser).
@@ -81,7 +86,7 @@ func Init() {
 			},
 		)
 
-	leafBot.OnCommand(`开启全员禁言`).
+	plugin.OnCommand(`开启全员禁言`).
 		SetPluginName("群管系统-全体禁言").
 		SetBlock(false).
 		AddRule(leafBot.OnlySuperUser).
@@ -94,7 +99,7 @@ func Init() {
 			},
 		)
 
-	leafBot.OnCommand(`解除全员禁言`).
+	plugin.OnCommand(`解除全员禁言`).
 		SetPluginName("群管系统-关闭全员群聊").
 		SetBlock(false).
 		AddRule(leafBot.OnlySuperUser).

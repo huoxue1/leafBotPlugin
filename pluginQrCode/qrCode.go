@@ -13,7 +13,11 @@ func init() {
 // UseCreateQrCode 生成二维码的插件
 func UseCreateQrCode() {
 
-	leafBot.OnCommand("/createQrcode").
+	plugin := leafBot.NewPlugin("二维码生成")
+	plugin.SetHelp(map[string]string{
+		"/createQrcode": "生成二维码",
+	})
+	plugin.OnCommand("/createQrcode").
 		AddAllies("生产二维码").
 		SetWeight(10).
 		SetPluginName("二维码生成").

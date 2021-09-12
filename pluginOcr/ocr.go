@@ -15,7 +15,11 @@ func init() {
  * example
  */
 func ocr() {
-	leafBot.OnCommand("/ocr").SetPluginName("图片ocr").SetBlock(false).SetWeight(10).AddRule(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) bool {
+	plugin := leafBot.NewPlugin("图片ocr")
+	plugin.SetHelp(map[string]string{
+		"ocr": "图片ocr",
+	})
+	plugin.OnCommand("ocr").SetPluginName("图片ocr").SetBlock(false).SetWeight(10).AddRule(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) bool {
 		for _, mess := range event.Message {
 			if mess.Type == "image" {
 				return true

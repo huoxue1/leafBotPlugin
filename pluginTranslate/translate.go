@@ -26,7 +26,9 @@ func init() {
 
 func UseTranslateHandle() {
 
-	leafBot.OnCommand("/ts").
+	plugin := leafBot.NewPlugin("翻译")
+	plugin.SetHelp(map[string]string{"ts": ""})
+	plugin.OnCommand("ts").
 		AddAllies("翻译").
 		SetWeight(10).
 		SetBlock(false).

@@ -22,7 +22,9 @@ func init() {
 }
 
 func UseDayImage() {
-	leafBot.OnCommand("/dayPic").
+	plugin := leafBot.NewPlugin("每日一图")
+	plugin.SetHelp(map[string]string{"/dayPic": "获取每日一图"})
+	plugin.OnCommand("/dayPic").
 		SetPluginName("每日一图").
 		SetWeight(10).
 		SetBlock(false).

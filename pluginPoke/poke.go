@@ -11,7 +11,8 @@ import (
 )
 
 func init() {
-	leafBot.OnNotice(leafBot.NoticeTypeApi.Notify).
+	plugin := leafBot.NewPlugin("戳一戳")
+	plugin.OnNotice(leafBot.NoticeTypeApi.Notify).
 		AddRule(leafBot.OnlySuperUser).
 		SetPluginName("poke").
 		AddRule(

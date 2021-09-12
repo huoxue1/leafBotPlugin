@@ -12,7 +12,9 @@ func init() {
 }
 
 func FakeMsg() {
-	leafBot.OnCommand("fakeMsg").
+	plugin := leafBot.NewPlugin("假消息")
+	plugin.SetHelp(map[string]string{"fakeMsg": "获取一条合并转发的假消息"})
+	plugin.OnCommand("fakeMsg").
 		SetBlock(false).
 		SetPluginName("假消息").
 		AddAllies("假消息").

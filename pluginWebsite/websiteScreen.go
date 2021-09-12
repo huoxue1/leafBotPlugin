@@ -12,7 +12,9 @@ func init() {
 }
 
 func WebSiteScreenInit() {
-	leafBot.OnCommand(">website").AddAllies("网页截图").SetPluginName("网页长截图").SetCD("default", 0).SetBlock(false).SetWeight(10).AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+	plugin := leafBot.NewPlugin("网页长截图")
+	plugin.SetHelp(map[string]string{">website": "对指定网页截图"})
+	plugin.OnCommand(">website").AddAllies("网页截图").SetPluginName("网页长截图").SetCD("default", 0).SetBlock(false).SetWeight(10).AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
 		if len(state.Args) < 1 {
 			bot.Send(event, message.Text("参数不足，详情参考帮助菜单"))
 			return

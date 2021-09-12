@@ -7,7 +7,10 @@ func init() {
 }
 
 func friendRequest() {
-	leafBot.OnRequest("friend").SetWeight(10).SetPluginName("自动同意好友").AddHandle(func(event leafBot.Event, bot *leafBot.Bot) {
+	plugin := leafBot.NewPlugin("好友申请")
+	plugin.SetHelp(map[string]string{"": "自动同意好友请求"})
+
+	plugin.OnRequest("friend").SetWeight(10).SetPluginName("自动同意好友").AddHandle(func(event leafBot.Event, bot *leafBot.Bot) {
 		for _, secret := range leafBot.DefaultConfig.Plugins.AutoPassFriendRequest {
 			if secret == event.Comment {
 				bot.SetFriendAddRequest(event.Flag, true, "")

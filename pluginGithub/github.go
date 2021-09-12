@@ -39,7 +39,11 @@ func PluginInit() {
 	githubInit()
 	log.Infoln("已启用github插件，请确保你配置了github token")
 
-	leafBot.OnMessage("").
+	plugin := leafBot.NewPlugin("github解析")
+	plugin.SetHelp(map[string]string{
+		">github": "解析github仓库，例如：>github huoxue1/leafBot",
+	})
+	plugin.OnMessage("").
 		SetPluginName("github url解析").
 		SetWeight(10).
 		AddRule(
@@ -62,7 +66,7 @@ func PluginInit() {
 			bot.Send(event, msg)
 		})
 
-	leafBot.OnCommand(">github").
+	plugin.OnCommand(">github").
 		SetPluginName("github解析").
 		SetWeight(10).
 		SetBlock(false).
