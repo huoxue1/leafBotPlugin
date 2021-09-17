@@ -35,7 +35,7 @@ func MoInit() {
 		"吃": "",
 		"啃": "",
 		"丢": ""})
-	plugin.OnMessage("group").SetWeight(10).SetPluginName("gif").AddRule(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) bool {
+	plugin.OnMessage("group").SetWeight(10).SetPluginName("gif").AddRule(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) bool {
 		for s, _ := range m {
 			if event.Message[0].Type == "text" && event.Message[0].Data["text"] == s {
 				state.Data["type"] = event.Message[0].Data["text"]
@@ -48,9 +48,9 @@ func MoInit() {
 			}
 		}
 		return false
-	}).AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+	}).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 		f := m[state.Data["type"].(string)]
-		bot.Send(event, message.Image(f(fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", state.Data["data"]))))
+		event.Send(message.Image(f(fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", state.Data["data"]))))
 	})
 
 }

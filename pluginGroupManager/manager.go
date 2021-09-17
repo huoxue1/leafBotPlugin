@@ -21,15 +21,15 @@ func Init() {
 		AddRule(leafBot.OnlySuperUser).
 		SetWeight(10).
 		AddHandle(
-			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 				ID, err := strconv.Atoi(state.RegexResult[1])
 				if err != nil {
-					bot.Send(event, message.Text("发生未知错误"+err.Error()))
+					event.Send(message.Text("发生未知错误" + err.Error()))
 					return
 				}
 				bot.SetGroupAdmin(event.GroupId, ID, true)
-				nickName := bot.GetGroupMemberInfo(event.GroupId, ID, true).NickName
-				bot.Send(event, message.Text(nickName+"升为了管理！"))
+				nickName := bot.GetGroupMemberInfo(event.GroupId, ID, true).Get("nick_name").String()
+				event.Send(message.Text(nickName + "升为了管理！"))
 			})
 
 	plugin.OnRegex(`^取消管理.*?qq=(\d+)`).
@@ -38,15 +38,15 @@ func Init() {
 		AddRule(leafBot.OnlySuperUser).
 		SetWeight(10).
 		AddHandle(
-			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 				ID, err := strconv.Atoi(state.RegexResult[1])
 				if err != nil {
-					bot.Send(event, message.Text("发生未知错误"+err.Error()))
+					event.Send(message.Text("发生未知错误" + err.Error()))
 					return
 				}
 				bot.SetGroupAdmin(event.GroupId, ID, false)
-				nickName := bot.GetGroupMemberInfo(event.GroupId, ID, true).NickName
-				bot.Send(event, message.Text(nickName+"失去了管理员的资格！"))
+				nickName := bot.GetGroupMemberInfo(event.GroupId, ID, true).Get("nick_name").String()
+				event.Send(message.Text(nickName + "失去了管理员的资格！"))
 			},
 		)
 
@@ -56,15 +56,15 @@ func Init() {
 		AddRule(leafBot.OnlySuperUser).
 		SetWeight(10).
 		AddHandle(
-			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 				ID, err := strconv.Atoi(state.RegexResult[1])
 				if err != nil {
-					bot.Send(event, message.Text("发生未知错误"+err.Error()))
+					event.Send(message.Text("发生未知错误" + err.Error()))
 					return
 				}
 				bot.SetGroupKick(event.GroupId, ID, false)
-				nickName := bot.GetGroupMemberInfo(event.GroupId, ID, true).NickName
-				bot.Send(event, message.Text(nickName+"被移除了群聊！"))
+				nickName := bot.GetGroupMemberInfo(event.GroupId, ID, true).Get("nick_name").String()
+				event.Send(message.Text(nickName + "被移除了群聊！"))
 			},
 		)
 
@@ -74,15 +74,15 @@ func Init() {
 		AddRule(leafBot.OnlySuperUser).
 		SetWeight(10).
 		AddHandle(
-			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 				ID, err := strconv.Atoi(state.RegexResult[1])
 				if err != nil {
-					bot.Send(event, message.Text("发生未知错误"+err.Error()))
+					event.Send(message.Text("发生未知错误" + err.Error()))
 					return
 				}
 				bot.SetGroupLeave(ID, true)
-				nickName := bot.GetGroupMemberInfo(event.GroupId, ID, true).NickName
-				bot.Send(event, message.Text(nickName+"被移除了群聊！"))
+				nickName := bot.GetGroupMemberInfo(event.GroupId, ID, true).Get("nick_name").String()
+				event.Send(message.Text(nickName + "被移除了群聊！"))
 			},
 		)
 
@@ -92,10 +92,10 @@ func Init() {
 		AddRule(leafBot.OnlySuperUser).
 		SetWeight(10).
 		AddHandle(
-			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 
 				bot.SetGroupWholeBan(event.GroupId, true)
-				bot.Send(event, message.Text("全员开始自闭"))
+				event.Send(message.Text("全员开始自闭"))
 			},
 		)
 
@@ -105,10 +105,10 @@ func Init() {
 		AddRule(leafBot.OnlySuperUser).
 		SetWeight(10).
 		AddHandle(
-			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 
 				bot.SetGroupWholeBan(event.GroupId, false)
-				bot.Send(event, message.Text("全员自闭结束"))
+				event.Send(message.Text("全员自闭结束"))
 			},
 		)
 

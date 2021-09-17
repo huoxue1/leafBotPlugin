@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/huoxue1/leafBot"
+	"github.com/huoxue1/leafBot/cqhttp_ws_driver"
 	"github.com/huoxue1/leafBotPlugin/global"
 	log "github.com/sirupsen/logrus"
 	"os"
@@ -25,6 +26,7 @@ import (
 	_ "github.com/huoxue1/leafBotPlugin/pluginWeibo"
 	_ "github.com/huoxue1/leafBotPlugin/plugin_fakeMsg"
 	_ "github.com/huoxue1/leafBotPlugin/plugin_friendRequest"
+	_ "github.com/huoxue1/leafBotPlugin/plugin_localStorage"
 
 	"github.com/huoxue1/leafBotPlugin/plugin_gif"
 )
@@ -32,7 +34,6 @@ import (
 var VERSION = "UnKnow"
 
 func init() {
-	leafBot.InitPluginManager()
 	plugin_gif.MoInit()
 
 }
@@ -62,6 +63,8 @@ func main() {
 		os.Exit(3)
 	}
 	go leafBot.InitWindow()
-
+	driver := cqhttp_ws_driver.NewDriver()
+	leafBot.LoadDriver(driver)
 	leafBot.InitBots()
+	driver.Run()
 }

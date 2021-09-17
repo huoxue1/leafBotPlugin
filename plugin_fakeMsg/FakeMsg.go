@@ -20,11 +20,11 @@ func FakeMsg() {
 		AddAllies("假消息").
 		SetCD("default", 3).
 		SetWeight(10).
-		AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
-			bot.Send(event, message.Text("请发送需要发送的假消息,发送`《《`停止录入信息：\neg:\n昵称 qq号 消息"))
+		AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
+			event.Send(message.Text("请发送需要发送的假消息,发送`《《`停止录入信息：\neg:\n昵称 qq号 消息"))
 			messages := message.Message{}
 			for true {
-				event1, err := bot.GetOneEvent(func(event1 leafBot.Event, bot1 *leafBot.Bot, state1 *leafBot.State) bool {
+				event1, err := event.GetOneEvent(func(event1 leafBot.Event, bot1 leafBot.Api, state1 *leafBot.State) bool {
 					if event1.GroupId == event.GroupId && event1.UserId == event.UserId {
 						return true
 					}
@@ -36,7 +36,7 @@ func FakeMsg() {
 				text := event1.GetPlainText()
 				datas := strings.Split(text, " ")
 				if len(datas) < 3 {
-					bot.Send(event, message.Text("错误的信息录入"))
+					event.Send(message.Text("错误的信息录入"))
 					break
 				}
 				id, err := strconv.ParseInt(datas[1], 10, 60)

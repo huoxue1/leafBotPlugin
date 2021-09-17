@@ -12,18 +12,18 @@ import (
 
 func init() {
 	plugin := leafBot.NewPlugin("戳一戳")
-	plugin.OnNotice(leafBot.NoticeTypeApi.Notify).
+	plugin.OnNotice("notify").
 		AddRule(leafBot.OnlySuperUser).
 		SetPluginName("poke").
 		AddRule(
-			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) bool {
+			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) bool {
 				if event.SubType != "poke" || event.UserId == event.SelfId || int(event.TargetId) != event.SelfId {
 					return false
 				}
 				return true
 			}).SetWeight(10).
 		AddHandle(
-			func(event leafBot.Event, bot *leafBot.Bot) {
+			func(event leafBot.Event, bot leafBot.Api) {
 				msg := fmt.Sprintf("服务器使用信息\n\t---------------\nCPU使用率：%0.2f%%\n内存占有率：%.2f%%\n\t----------------", GetCpuPercent(), GetMemPercent())
 				if event.GroupId != 0 {
 					bot.SendGroupMsg(event.GroupId, message.Text(msg))

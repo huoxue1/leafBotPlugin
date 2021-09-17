@@ -47,11 +47,11 @@ func PluginInit() {
 		SetPluginName("github url解析").
 		SetWeight(10).
 		AddRule(
-			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) bool {
+			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) bool {
 				compile := regexp.MustCompile(`https://github.com/([^\s]*)/([^\s]*)`)
 				return compile.MatchString(event.Message.CQString())
 			}).
-		AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+		AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 			log.Infoln("成功匹配")
 			compile := regexp.MustCompile(`https://github.com/([^\s]*)/([^\s]*)`)
 			datas := compile.FindStringSubmatch(event.Message.ExtractPlainText())
@@ -63,7 +63,7 @@ func PluginInit() {
 			if err != nil {
 				log.Errorln(err)
 			}
-			bot.Send(event, msg)
+			event.Send(msg)
 		})
 
 	plugin.OnCommand(">github").
@@ -71,16 +71,16 @@ func PluginInit() {
 		SetWeight(10).
 		SetBlock(false).
 		SetCD("default", 0).
-		AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+		AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 			if len(state.Args) < 1 {
-				bot.Send(event, "请输入你需要解析的仓库，例如\n>github huoxue1/leafBot")
+				event.Send("请输入你需要解析的仓库，例如\n>github huoxue1/leafBot")
 				return
 			}
 			msg, err := getResponseMsg(strings.Split(state.Args[0], "/")[0], strings.Split(state.Args[0], "/")[1])
 			if err != nil {
-				bot.Send(event, "仓库获取失败"+err.Error())
+				event.Send("仓库获取失败" + err.Error())
 			}
-			bot.Send(event, []message.MessageSegment{
+			event.Send([]message.MessageSegment{
 				message.Text(msg),
 				message.Image(
 					fmt.Sprintf("https://opengraph.githubassets.com/0/%v/%v",

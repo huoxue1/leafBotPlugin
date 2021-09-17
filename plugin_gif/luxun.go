@@ -25,12 +25,12 @@ func init() {
 }
 
 func LuXun() {
-	leafBot.OnStartWith("鲁迅说").SetPluginName("鲁迅说").SetWeight(10).AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+	leafBot.OnStartWith("鲁迅说").SetPluginName("鲁迅说").SetWeight(10).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 		text := event.GetPlainText()
 		data := strings.TrimLeft(text, "鲁迅说")
 		if len(data) == 0 {
-			bot.Send(event, message.Text("你想让鲁迅说点什么呢？"))
-			event1, err := bot.GetOneEvent(func(event1 leafBot.Event, bot1 *leafBot.Bot, state1 *leafBot.State) bool {
+			event.Send(message.Text("你想让鲁迅说点什么呢？"))
+			event1, err := event.GetOneEvent(func(event1 leafBot.Event, bot1 leafBot.Api, state1 *leafBot.State) bool {
 				if event1.UserId == event.UserId && event1.GroupId == event.GroupId {
 					return true
 				}
@@ -44,10 +44,10 @@ func LuXun() {
 
 		img, err := getImage(data)
 		if err != nil {
-			bot.Send(event, message.Text("鲁迅说出错了"+err.Error()))
+			event.Send(message.Text("鲁迅说出错了" + err.Error()))
 			return
 		}
-		bot.Send(event, message.Image("base64://"+base64.StdEncoding.EncodeToString(img)))
+		event.Send(message.Image("base64://" + base64.StdEncoding.EncodeToString(img)))
 	})
 }
 

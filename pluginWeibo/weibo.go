@@ -40,9 +40,9 @@ func init() {
 		AddHandle(weiBoHandle)
 }
 
-func weiBoHandle(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+func weiBoHandle(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 	if leafBot.DefaultConfig.Plugins.AlApiToken == "" {
-		bot.Send(event, message.Text("未检测到alapitoken，请联系bot管理员为其配置。\n申请地址https://admin.alapi.cn/api_manager/token_manager"))
+		event.Send(message.Text("未检测到alapitoken，请联系bot管理员为其配置。\n申请地址https://admin.alapi.cn/api_manager/token_manager"))
 		return
 	}
 	if len(state.Args) < 1 {
@@ -54,29 +54,29 @@ func weiBoHandle(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
 
 		res := base64.StdEncoding.EncodeToString(srcByte)
 
-		bot.Send(event, message.Image("base64://"+res))
+		event.Send(message.Image("base64://" + res))
 	} else {
 		limit, err := strconv.Atoi(state.Args[0])
 		if err != nil {
 			return
 		}
 		if limit > 50 || limit < 0 {
-			bot.Send(event, []message.MessageSegment{message.Text("非法参数"), message.At(int64(event.UserId))})
+			event.Send([]message.MessageSegment{message.Text("非法参数"), message.At(int64(event.UserId))})
 			return
 		}
 		//draw(limit)
 		api, err := getDataAlApi(50)
 		if err != nil {
-			bot.Send(event, message.Text("api获取错误"+err.Error()))
+			event.Send(message.Text("api获取错误" + err.Error()))
 			return
 		}
-		bot.Send(event, message.Text("downloading image ......"))
+		event.Send(message.Text("downloading image ......"))
 		data, err := utils.GetPWScreen(fmt.Sprintf("https://s.weibo.com/weibo?q=%v&Refer=top", api.Data[limit-1].HotWord), "android")
 		if err != nil {
-			bot.Send(event, err.Error())
+			event.Send(err.Error())
 			return
 		}
-		bot.Send(event, message.Image("base64://"+base64.StdEncoding.EncodeToString(data)))
+		event.Send(message.Image("base64://" + base64.StdEncoding.EncodeToString(data)))
 	}
 
 	//getWeibo(0)

@@ -242,7 +242,7 @@ func UseMusicHandle() {
 		SetBlock(false).
 		AddRule(leafBot.OnlyToMe).
 		AddHandle(
-			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 				switch len(state.Args) {
 				case 0:
 					{
@@ -311,9 +311,9 @@ func UseMusicHandle() {
 		AddAllies("点歌").
 		SetBlock(false).
 		AddHandle(
-			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 				if len(state.Args) < 2 {
-					bot.Send(event, message.Text("请输入正确的参数"))
+					event.Send(message.Text("请输入正确的参数"))
 					return
 				}
 				if state.Args[0] == "163" {
@@ -328,10 +328,10 @@ func UseMusicHandle() {
 						music, err := searchMusic(name, 1, 0)
 						log.Debugln(music)
 						if err != nil {
-							bot.Send(event, message.Text("搜索歌曲错误\n"+err.Error()))
+							event.Send(message.Text("搜索歌曲错误\n" + err.Error()))
 							return
 						}
-						bot.Send(event, message.Music("163", int64(music.Result.Songs[0].ID)))
+						event.Send(message.Music("163", int64(music.Result.Songs[0].ID)))
 
 					}
 				} else if state.Args[0] == "qq" {
@@ -341,15 +341,15 @@ func UseMusicHandle() {
 						if err != nil {
 							return
 						}
-						bot.Send(event, message.Music("qq", int64(id)))
+						event.Send(message.Music("qq", int64(id)))
 					} else {
 						name := state.Args[1]
 						music, err := searchMusicByQQ(name, 1, 0)
 						if err != nil {
-							bot.Send(event, message.Text("搜索歌曲错误\n"+err.Error()))
+							event.Send(message.Text("搜索歌曲错误\n" + err.Error()))
 							return
 						}
-						bot.Send(event, message.Music("qq", int64(music.Data.Song.List[0].Songid)))
+						event.Send(message.Music("qq", int64(music.Data.Song.List[0].Songid)))
 					}
 				}
 

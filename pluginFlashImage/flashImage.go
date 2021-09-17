@@ -17,7 +17,7 @@ func init() {
 */
 func UseFlashImage(userID int) {
 	plugin := leafBot.NewPlugin("闪照获取")
-	plugin.OnMessage("").SetPluginName("闪照拦截").AddRule(FlashMessageRule).AddHandle(func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+	plugin.OnMessage("").SetPluginName("闪照拦截").AddRule(FlashMessageRule).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 		if userID == 0 {
 			userID = leafBot.DefaultConfig.Admin
 		}
@@ -41,7 +41,7 @@ func UseFlashImageToGroup() {
 		AddRule(FlashMessageRule).
 		SetPluginName("闪照拦截").
 		AddHandle(
-			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 
 				groupId := leafBot.DefaultConfig.Plugins.FlashGroupID
 				if leafBot.DefaultConfig.Plugins.FlashGroupID == -1 {
@@ -61,7 +61,7 @@ func UseFlashImageToGroup() {
 
 }
 
-func FlashMessageRule(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) bool {
+func FlashMessageRule(event leafBot.Event, bot leafBot.Api, state *leafBot.State) bool {
 	for _, msg := range event.GetMsg() {
 		if msg.Type == "image" && msg.Data["type"] == "flash" {
 			return true

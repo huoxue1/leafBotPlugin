@@ -18,7 +18,7 @@ func InitBanPlugin() {
 		SetWeight(10).
 		SetPluginName("禁言").
 		AddHandle(
-			func(event leafBot.Event, bot *leafBot.Bot, state *leafBot.State) {
+			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 				msgs := event.GetMsg()
 				var banIds []int
 				duration := 10
@@ -44,7 +44,7 @@ func InitBanPlugin() {
 					}
 				}
 				if len(banIds) < 1 {
-					bot.Send(event, message.Text("请艾特被禁言的成员才能禁言"))
+					event.Send(message.Text("请艾特被禁言的成员才能禁言"))
 					return
 				}
 				for _, id := range banIds {
