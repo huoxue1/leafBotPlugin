@@ -62,7 +62,6 @@ func main() {
 		}
 		os.Exit(3)
 	}
-	go leafBot.InitWindow()
 	driver := cqhttp_ws_driver.NewDriver()
 	leafBot.LoadDriver(driver)
 	leafBot.InitBots()
