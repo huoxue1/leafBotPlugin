@@ -1,5 +1,4 @@
 pkill main
-
 git checkout .
 git pull
 go mod tidy

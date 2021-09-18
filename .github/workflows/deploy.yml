@@ -21,4 +21,4 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script:
-            cd /home/ubuntu/app/Bot/bot_31808/leafBotPlugin && chmod -R 777 ./quick_deploy.sh && ./quick_deploy.sh
+            cd /home/ubuntu/app/Bot/bot_31808/leafBotPlugin && chmod -R 777 quick_deploy.sh && ./quick_deploy.sh
