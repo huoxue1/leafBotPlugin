@@ -1,0 +1,29 @@
+name: deploy
+
+on: [push, pull_request]
+
+
+jobs:
+  build:
+    name: Build binary CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: checkout
+
+      - name: deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script:
+            pkill main
+            cd /home/ubuntu/app/Bot/bot_31808/leafBotPlugin
+            git checkout .
+            git pull
+            go mod tidy
+            go build main.go
+            nohup ./main > bot.log 2>&1 &
