@@ -32,9 +32,14 @@ func initPath() {
 func StorageInit() {
 	plugin := leafBot.NewPlugin("local_storage")
 	plugin.SetHelp(map[string]string{})
-	plugin.OnCommand("storage").AddAllies("存储").SetBlock(true).SetWeight(7).AddRule(leafBot.OnlyToMe).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
-		if len(state.Args) < 2 {
+	plugin.OnCommand("storage").
+		AddAllies("存储").
+		SetBlock(true).
+		SetWeight(7).
+		AddRule(leafBot.OnlyToMe).
+		AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
+			if len(state.Args) < 2 {
 
-		}
-	})
+			}
+		})
 }

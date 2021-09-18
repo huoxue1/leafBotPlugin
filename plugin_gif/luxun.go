@@ -25,7 +25,9 @@ func init() {
 }
 
 func LuXun() {
-	leafBot.OnStartWith("鲁迅说").SetPluginName("鲁迅说").SetWeight(10).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
+	plugin := leafBot.NewPlugin("鲁迅说")
+	plugin.SetHelp(map[string]string{"发送鲁迅说即可获取结果": ""})
+	plugin.OnStartWith("鲁迅说").SetPluginName("鲁迅说").SetWeight(10).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 		text := event.GetPlainText()
 		data := strings.TrimLeft(text, "鲁迅说")
 		if len(data) == 0 {

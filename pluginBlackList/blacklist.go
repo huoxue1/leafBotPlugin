@@ -55,7 +55,7 @@ func InitBlackList(filePath string) {
 		"/get_blackList":       "获取黑名单列表",
 	})
 
-	leafBot.OnPretreatment().SetPluginName("黑名单预处理").SetWeight(10).AddHandle(func(event leafBot.Event, bot leafBot.Api) bool {
+	plugin.OnPretreatment().SetPluginName("黑名单预处理").SetWeight(10).AddHandle(func(event leafBot.Event, bot leafBot.Api) bool {
 		for _, user := range BlackList.Users {
 			if user == event.UserId {
 				return false
@@ -69,7 +69,7 @@ func InitBlackList(filePath string) {
 		return true
 	})
 
-	leafBot.OnCommand("/add_blackList_user").
+	plugin.OnCommand("/add_blackList_user").
 		AddRule(leafBot.OnlySuperUser). // 设置仅可管理员用户触发
 		SetWeight(10).
 		SetPluginName("添加黑名单用户").
@@ -93,7 +93,7 @@ func InitBlackList(filePath string) {
 
 			})
 
-	leafBot.OnCommand("/add_blackList_group").
+	plugin.OnCommand("/add_blackList_group").
 		AddRule(leafBot.OnlySuperUser).SetWeight(10).
 		SetBlock(false).
 		SetPluginName("添加黑名单群").
@@ -115,7 +115,7 @@ func InitBlackList(filePath string) {
 
 			})
 
-	leafBot.OnCommand("/get_blackList").SetPluginName("获取黑名单列表").AddRule(leafBot.OnlySuperUser).AddAllies("获取黑名单").SetBlock(false).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
+	plugin.OnCommand("/get_blackList").SetPluginName("获取黑名单列表").AddRule(leafBot.OnlySuperUser).AddAllies("获取黑名单").SetBlock(false).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 		msg := "黑名单：\n用户\n"
 		for _, user := range BlackList.Users {
 			msg += fmt.Sprintf("\t%d\n", user)

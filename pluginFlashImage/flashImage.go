@@ -34,32 +34,32 @@ func UseFlashImage(userID int) {
 	})
 }
 
-func UseFlashImageToGroup() {
-
-	leafBot.
-		OnMessage("").
-		AddRule(FlashMessageRule).
-		SetPluginName("闪照拦截").
-		AddHandle(
-			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
-
-				groupId := leafBot.DefaultConfig.Plugins.FlashGroupID
-				if leafBot.DefaultConfig.Plugins.FlashGroupID == -1 {
-					groupId = event.GroupId
-				}
-
-				var mess message.MessageSegment
-				if event.MessageType == "group" {
-					mess = message.Text(time.Now().Format("2006-01-02 15:04:05") + "\n来自群" + strconv.Itoa(event.GroupId) + "用户" +
-						strconv.Itoa(event.UserId) + "所发闪照")
-				} else {
-					mess = message.Text(time.Now().Format("2006-01-02 15:04:05") + "\n来自私聊信息" + "用户" +
-						strconv.Itoa(event.UserId) + "所发闪照")
-				}
-				bot.SendGroupMsg(groupId, []message.MessageSegment{mess, event.Message[0].Delete("type")})
-			})
-
-}
+//func UseFlashImageToGroup() {
+//
+//	leafBot.
+//		OnMessage("").
+//		AddRule(FlashMessageRule).
+//		SetPluginName("闪照拦截").
+//		AddHandle(
+//			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
+//
+//				groupId := leafBot.DefaultConfig.Plugins.FlashGroupID
+//				if leafBot.DefaultConfig.Plugins.FlashGroupID == -1 {
+//					groupId = event.GroupId
+//				}
+//
+//				var mess message.MessageSegment
+//				if event.MessageType == "group" {
+//					mess = message.Text(time.Now().Format("2006-01-02 15:04:05") + "\n来自群" + strconv.Itoa(event.GroupId) + "用户" +
+//						strconv.Itoa(event.UserId) + "所发闪照")
+//				} else {
+//					mess = message.Text(time.Now().Format("2006-01-02 15:04:05") + "\n来自私聊信息" + "用户" +
+//						strconv.Itoa(event.UserId) + "所发闪照")
+//				}
+//				bot.SendGroupMsg(groupId, []message.MessageSegment{mess, event.Message[0].Delete("type")})
+//			})
+//
+//}
 
 func FlashMessageRule(event leafBot.Event, bot leafBot.Api, state *leafBot.State) bool {
 	for _, msg := range event.GetMsg() {
