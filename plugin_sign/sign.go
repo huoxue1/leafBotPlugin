@@ -1,4 +1,4 @@
-package pluginsign
+package plugin_sign
 
 func init() {
 
