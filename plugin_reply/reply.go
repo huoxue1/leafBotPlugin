@@ -1,4 +1,4 @@
-package leafBot_reply
+package plugin_reply
 
 import (
 	"github.com/huoxue1/leafBot"

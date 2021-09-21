@@ -34,7 +34,6 @@ var VERSION = "UnKnow"
 
 func init() {
 	plugin_gif.MoInit()
-
 }
 
 func main() {

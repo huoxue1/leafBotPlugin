@@ -1,1 +1,5 @@
-package plugin_sign
+package pluginsign
+
+func init() {
+
+}
