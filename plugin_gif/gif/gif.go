@@ -13,11 +13,11 @@ func Mo(yuan string) string {
 
 	im := img.ImDc(yuan, 0, 0).Circle(0).Im
 	mo := []*image.NRGBA{
-		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/mo/1.png", 0, 0).DstOver(im, 80, 80, 32, 32).Im,
-		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/mo/2.png", 0, 0).DstOver(im, 70, 90, 42, 22).Im,
-		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/mo/3.png", 0, 0).DstOver(im, 75, 85, 37, 27).Im,
-		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/mo/4.png", 0, 0).DstOver(im, 85, 75, 27, 37).Im,
-		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/mo/5.png", 0, 0).DstOver(im, 90, 70, 22, 42).Im,
+		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/mo/0.png", 0, 0).DstOver(im, 80, 80, 32, 32).Im,
+		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/mo/1.png", 0, 0).DstOver(im, 70, 90, 42, 22).Im,
+		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/mo/2.png", 0, 0).DstOver(im, 75, 85, 37, 27).Im,
+		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/mo/3.png", 0, 0).DstOver(im, 85, 75, 27, 37).Im,
+		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/mo/4.png", 0, 0).DstOver(im, 90, 70, 22, 42).Im,
 	}
 
 	var result []byte
@@ -55,7 +55,7 @@ func Pai(yuan string) string {
 	tou := img.ImDc(yuan, 30, 30).Circle(0).Im
 	pai := []*image.NRGBA{
 		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/pai/0.png", 0, 0).Over(tou, 0, 0, 1, 47).Im,
-		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/pai/2.png", 0, 0).Over(tou, 0, 0, 1, 67).Im,
+		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/pai/1.png", 0, 0).Over(tou, 0, 0, 1, 67).Im,
 	}
 	var result []byte
 	buffer := bytes.NewBuffer(result)
