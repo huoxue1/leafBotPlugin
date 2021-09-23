@@ -11,7 +11,7 @@ require (
 	github.com/google/go-github/v35 v35.2.0
 	github.com/guonaihong/gout v0.2.6
 	github.com/huoxue1/gg v1.3.1-0.20210909025831-836d8040c759
-	github.com/huoxue1/leafBot v1.1.3
+	github.com/huoxue1/leafBot v1.1.4-0.20210921102419-127b1111a19a
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/mattn/go-sqlite3 v1.14.8
 	github.com/mxschmitt/playwright-go v0.1100.0
