@@ -18,7 +18,7 @@ var font []byte
 func init() {
 	LuXun()
 
-	err := gout.GET("https://codechina.csdn.net/m15082717021/image/-/raw/master/202109091139659.ttf").BindBody(&font).Do()
+	err := gout.GET("https://codechina.csdn.net/m15082717021/image/-/raw/main/202109091139659.ttf").BindBody(&font).Do()
 	if err == nil {
 		log.Infoln("加载字体文件成功")
 	}
@@ -57,7 +57,7 @@ func getImage(text string) ([]byte, error) {
 	var result []byte
 	buffer := bytes.NewBuffer(result)
 	var data []byte
-	err := gout.GET("https://codechina.csdn.net/m15082717021/image/-/raw/master/202109090936718.jpeg").BindBody(&data).Do()
+	err := gout.GET("https://codechina.csdn.net/m15082717021/image/-/raw/main/202109090936718.jpeg").BindBody(&data).Do()
 	if err != nil {
 		return nil, err
 	}

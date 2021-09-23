@@ -8,6 +8,7 @@ import (
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
 	"github.com/huoxue1/leafBotPlugin/plugin_gif/gif"
+	"regexp"
 )
 
 var (
@@ -43,6 +44,8 @@ func MoInit() {
 					if segment.Type == "at" {
 						state.Data["data"] = segment.Data["qq"]
 						return true
+					} else if segment.Type == "image" {
+						state.Data["image"] = segment.Data["url"]
 					}
 				}
 			}
@@ -50,7 +53,20 @@ func MoInit() {
 		return false
 	}).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 		f := m[state.Data["type"].(string)]
-		event.Send(message.Image(f(fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", state.Data["data"]))))
+		link := ""
+		data, ok := state.Data["data"]
+		data1, ok1 := state.Data["image"]
+		if ok {
+			link = fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", data)
+		} else if ok1 {
+			link = data1.(string)
+		} else {
+			compile := regexp.MustCompile(`\d+`)
+			if compile.MatchString(event.GetPlainText()) {
+				link = fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", compile.FindStringSubmatch(event.GetPlainText())[1])
+			}
+		}
+		event.Send(message.Image(f(link)))
 	})
 
 }

@@ -156,6 +156,8 @@ github.com/huoxue1/gg v1.3.1-0.20210909025831-836d8040c759 h1:n0UPAaRa7nq0hPd4TU
 github.com/huoxue1/gg v1.3.1-0.20210909025831-836d8040c759/go.mod h1:fUbidWJbgI9Gc/FNaCATEcM0KjDGRGSdEVDoLSmqHJk=
 github.com/huoxue1/leafBot v1.1.4-0.20210921102419-127b1111a19a h1:fe8je3pT6Fn/MKlSlflmiNL/HL946n9Kc4WwiQJfup8=
 github.com/huoxue1/leafBot v1.1.4-0.20210921102419-127b1111a19a/go.mod h1:WiGgBS4it3ZX6F2E8wEEnrEupt7Dq2MJt75UG+rGCMk=
+github.com/huoxue1/leafBot v1.1.4-0.20210923143711-c49517f29c9b h1:FrKqXyJb8NcpEjkzvBxNAqcV3EfTAw42i4g6SUwleoU=
+github.com/huoxue1/leafBot v1.1.4-0.20210923143711-c49517f29c9b/go.mod h1:msMnFF3OjsNfWiERWY1CbbGw0ld0xW7P1IBIEApYM/8=
 github.com/huoxue1/lorca v0.1.11 h1:B5x4Xta8rauGCERoCHY7nWg2z1GUrksf9ycZGHwLs4Q=
 github.com/huoxue1/lorca v0.1.11/go.mod h1:eEI3aGkmMladREqFJwUhd8cLlSUgG13wvuNprVjaVaY=
 github.com/huoxue1/test3 v0.0.0-20210921063422-c43e6876777d h1:wCAgKH32OqyCkV6K/E6unTW2KEuBzkB9VRjWyxBkGPQ=

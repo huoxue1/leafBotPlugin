@@ -3,6 +3,7 @@ module github.com/huoxue1/leafBotPlugin
 go 1.16
 
 require (
+	github.com/DaRealFreak/colored-nested-formatter v1.0.0 // indirect
 	github.com/PuerkitoBio/goquery v1.7.0
 	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/disintegration/imaging v1.6.2 // indirect
@@ -11,7 +12,7 @@ require (
 	github.com/google/go-github/v35 v35.2.0
 	github.com/guonaihong/gout v0.2.6
 	github.com/huoxue1/gg v1.3.1-0.20210909025831-836d8040c759
-	github.com/huoxue1/leafBot v1.1.4-0.20210921102419-127b1111a19a
+	github.com/huoxue1/leafBot v1.1.4-0.20210923143711-c49517f29c9b
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/mattn/go-sqlite3 v1.14.8
 	github.com/mxschmitt/playwright-go v0.1100.0
@@ -22,4 +23,5 @@ require (
 	github.com/tklauser/go-sysconf v0.3.9 // indirect
 	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
 	golang.org/x/oauth2 v0.0.0-20210514164344-f6687ab2804c
+	golang.org/x/tools v0.1.5 // indirect
 )
