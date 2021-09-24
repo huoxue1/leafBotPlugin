@@ -1,35 +1,34 @@
 package pluginWeibo
 
 import (
+	"bytes"
 	_ "embed"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
+	"strconv"
+
+	"github.com/guonaihong/gout"
 	"github.com/huoxue1/gg"
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
 	"github.com/huoxue1/leafBot/utils"
 	"github.com/mxschmitt/playwright-go"
 	log "github.com/sirupsen/logrus"
-	"io"
-	"io/ioutil"
-	"net/http"
-	"strconv"
 )
 
-//go:embed NotoSansBold.ttf
-var fontData []byte
+var font []byte
 
 func init() {
-
-	exists, _ := utils.PathExists("./config/NotoSansBold.ttf")
-	if !exists {
-		err := utils.WriteToFile("./config/NotoSansBold.ttf", fontData)
-		if err != nil {
-			log.Infoln("成功写入字体文件NotoSansBold.ttf")
-		}
+	err := gout.GET("https://codechina.csdn.net/m15082717021/image/-/raw/main/202109091139659.ttf").BindBody(&font).Do()
+	if err == nil {
+		log.Infoln("加载字体文件成功")
 	}
+}
 
+func init() {
 	plugin := leafBot.NewPlugin("微博热搜")
 
 	plugin.OnCommand("/weibo").
@@ -46,13 +45,9 @@ func weiBoHandle(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 		return
 	}
 	if len(state.Args) < 1 {
-		draw(50)
-		srcByte, err := ioutil.ReadFile("./config/weibo.png")
-		if err != nil {
-			log.Fatal(err)
-		}
+		data := draw(50)
 
-		res := base64.StdEncoding.EncodeToString(srcByte)
+		res := base64.StdEncoding.EncodeToString(data)
 
 		event.Send(message.Image("base64://" + res))
 	} else {
@@ -109,35 +104,35 @@ func getWeibo(url string) []byte {
 		FullPage: playwright.Bool(true),
 	})
 	return data
-
 }
 
-func draw(limit int) {
+func draw(limit int) []byte {
+	var result []byte
+	buffer := bytes.NewBuffer(result)
 	context := gg.NewContext(900, 100*(limit+1))
 	context.SetRGB255(255, 255, 0)
 	context.DrawRectangle(0, 0, 900, float64(100*(limit+1)))
 	//weibo, err := getData()
 	weibo, err := getDataAlApi(limit)
 	context.Fill()
-	if err := context.LoadFontFace("./config/NotoSansBold.ttf", 40); err != nil {
+	if err := context.LoadFontFromBytes(font, 40); err != nil {
 		log.Debugln(err)
 	}
 	context.SetRGB255(0, 0, 0)
 	fmt.Println(weibo)
 	if err != nil {
-		return
+		return nil
 	}
-	//for i := 0; i < limit; i++ {
-	//	fmt.Println(weibo.Data[i].Name)
-	//	context.DrawString(strconv.Itoa(i+1)+"："+weibo.Data[i].Name, 0, float64(100*(i+1)))
-	//}
+
 	for i, datum := range weibo.Data {
 		context.DrawString(strconv.Itoa(i+1)+"："+datum.HotWord+"  "+datum.HotWordNum, 0, float64(100*(i+1)))
 	}
-	err = context.SavePNG("./config/weibo.png")
+	err = context.EncodePNG(buffer)
 	if err != nil {
-		log.Debugln("图片保存失败")
+		return nil
 	}
+
+	return buffer.Bytes()
 }
 
 func getDataAlApi(num int) (AlApi, error) {
