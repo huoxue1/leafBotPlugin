@@ -1,16 +1,18 @@
+// Package gif
+// @Description:
 package gif
 
 import (
 	"bytes"
 	"encoding/base64"
-	log "github.com/sirupsen/logrus"
-	"github.com/tdf1939/img"
 	"image"
 	"image/gif"
+
+	log "github.com/sirupsen/logrus"
+	"github.com/tdf1939/img"
 )
 
 func Mo(yuan string) string {
-
 	im := img.ImDc(yuan, 0, 0).Circle(0).Im
 	mo := []*image.NRGBA{
 		img.ImDc("https://codechina.csdn.net/m15082717021/image/-/raw/main/mo/0.png", 0, 0).DstOver(im, 80, 80, 32, 32).Im,
@@ -79,7 +81,6 @@ func Chong(yuan string) string {
 		log.Panicln("生成图片出现错误")
 	}
 	return "base64://" + base64.StdEncoding.EncodeToString(buffer.Bytes())
-
 }
 
 // Qiao 敲
@@ -96,7 +97,6 @@ func Qiao(yuan string) string {
 		log.Panicln("生成图片出现错误")
 	}
 	return "base64://" + base64.StdEncoding.EncodeToString(buffer.Bytes())
-
 }
 
 // Chi 吃
@@ -114,7 +114,6 @@ func Chi(yuan string) string {
 		log.Panicln("生成图片出现错误")
 	}
 	return "base64://" + base64.StdEncoding.EncodeToString(buffer.Bytes())
-
 }
 
 // Ken 啃

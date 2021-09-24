@@ -1,16 +1,20 @@
+// Package plugin_gif
+// @Description:
 package plugin_gif
 
 import (
 	"bytes"
 	_ "embed"
 	"encoding/base64"
-	"github.com/guonaihong/gout"
-	"github.com/huoxue1/gg"
-	"github.com/huoxue1/leafBot"
-	"github.com/huoxue1/leafBot/message"
-	log "github.com/sirupsen/logrus"
 	"image"
 	"strings"
+
+	"github.com/guonaihong/gout"
+	"github.com/huoxue1/gg"
+	log "github.com/sirupsen/logrus"
+
+	"github.com/huoxue1/leafBot"
+	"github.com/huoxue1/leafBot/message"
 )
 
 var font []byte
@@ -24,6 +28,11 @@ func init() {
 	}
 }
 
+// LuXun
+/**
+ * @Description:
+ * example
+ */
 func LuXun() {
 	plugin := leafBot.NewPlugin("鲁迅说")
 	plugin.SetHelp(map[string]string{"发送鲁迅说即可获取结果": ""})
@@ -82,5 +91,4 @@ func getImage(text string) ([]byte, error) {
 	}
 
 	return buffer.Bytes(), err
-
 }

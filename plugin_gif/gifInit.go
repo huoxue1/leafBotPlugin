@@ -5,10 +5,12 @@ package plugin_gif
 
 import (
 	"fmt"
+	"regexp"
+
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
+
 	"github.com/huoxue1/leafBotPlugin/plugin_gif/gif"
-	"regexp"
 )
 
 var (
@@ -25,7 +27,6 @@ var (
 )
 
 func MoInit() {
-
 	plugin := leafBot.NewPlugin("搞笑gif")
 	plugin.SetHelp(map[string]string{
 		"摸": "",
@@ -37,7 +38,7 @@ func MoInit() {
 		"啃": "",
 		"丢": ""})
 	plugin.OnMessage("group").SetWeight(10).SetPluginName("gif").AddRule(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) bool {
-		for s, _ := range m {
+		for s := range m {
 			if event.Message[0].Type == "text" && event.Message[0].Data["text"] == s {
 				state.Data["type"] = event.Message[0].Data["text"]
 				for _, segment := range event.Message {
@@ -68,5 +69,4 @@ func MoInit() {
 		}
 		event.Send(message.Image(f(link)))
 	})
-
 }
