@@ -44,24 +44,24 @@ func MoInit() {
 				for _, segment := range event.Message {
 					if segment.Type == "at" {
 						state.Data["data"] = segment.Data["qq"]
-						return true
 					} else if segment.Type == "image" {
 						state.Data["image"] = segment.Data["url"]
 					}
 				}
 			}
 		}
-		return false
+		return true
 	}).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 		f := m[state.Data["type"].(string)]
 		link := ""
 		data, ok := state.Data["data"]
 		data1, ok1 := state.Data["image"]
-		if ok {
+		switch {
+		case ok:
 			link = fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", data)
-		} else if ok1 {
+		case ok1:
 			link = data1.(string)
-		} else {
+		default:
 			compile := regexp.MustCompile(`\d+`)
 			if compile.MatchString(event.GetPlainText()) {
 				link = fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", compile.FindStringSubmatch(event.GetPlainText())[1])
