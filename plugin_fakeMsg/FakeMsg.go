@@ -1,10 +1,11 @@
 package plugin_fakeMsg
 
 import (
-	"github.com/huoxue1/leafBot"
-	"github.com/huoxue1/leafBot/message"
 	"strconv"
 	"strings"
+
+	"github.com/huoxue1/leafBot"
+	"github.com/huoxue1/leafBot/message"
 )
 
 func init() {
@@ -44,13 +45,11 @@ func FakeMsg() {
 					break
 				}
 				messages = append(messages, message.CustomNode(datas[0], id, datas[2]))
-
 			}
 			if len(messages) < 1 {
 				return
 			}
 
 			bot.SendGroupForwardMsg(event.GroupId, messages)
-
 		})
 }
