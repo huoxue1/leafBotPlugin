@@ -9,7 +9,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 	"github.com/tidwall/gjson"
 
-	pixiv2 "github.com/huoxue1/leafBotPlugin/global"
+	pixiv2 "github.com/huoxue1/leafBotPlugin/global/pixiv"
 )
 
 func init() {
