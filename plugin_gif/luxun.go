@@ -17,15 +17,9 @@ import (
 	"github.com/huoxue1/leafBot/message"
 )
 
-var font []byte
-
 func init() {
 	LuXun()
 
-	err := gout.GET("https://codechina.csdn.net/m15082717021/image/-/raw/main/202109091139659.ttf").BindBody(&font).Do()
-	if err == nil {
-		log.Infoln("加载字体文件成功")
-	}
 }
 
 // LuXun
@@ -76,7 +70,7 @@ func getImage(text string) ([]byte, error) {
 	}
 	log.Infoln(s)
 	context := gg.NewContextForImage(decode)
-	err = context.LoadFontFromBytes(font, 30)
+	err = context.LoadFontFromBytes(leafBot.GetFont(), 30)
 	if err != nil {
 		log.Errorln(err.Error())
 		return nil, err

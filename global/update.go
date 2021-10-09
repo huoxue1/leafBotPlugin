@@ -2,14 +2,15 @@ package global
 
 import (
 	"fmt"
-	"github.com/guonaihong/gout"
-	log "github.com/sirupsen/logrus"
-	"github.com/tidwall/gjson"
 	"io"
 	"os"
 	"runtime"
 	"strconv"
 	"strings"
+
+	"github.com/guonaihong/gout"
+	log "github.com/sirupsen/logrus"
+	"github.com/tidwall/gjson"
 )
 
 func Update() error {

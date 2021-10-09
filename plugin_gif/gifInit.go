@@ -26,7 +26,16 @@ var (
 	}
 )
 
-func MoInit() {
+func init() {
+	moInit()
+}
+
+// MoInit
+/**
+ * @Description:
+ * example
+ */
+func moInit() {
 	plugin := leafBot.NewPlugin("搞笑gif")
 	plugin.SetHelp(map[string]string{
 		"摸": "",
@@ -44,13 +53,20 @@ func MoInit() {
 				for _, segment := range event.Message {
 					if segment.Type == "at" {
 						state.Data["data"] = segment.Data["qq"]
+						return true
 					} else if segment.Type == "image" {
 						state.Data["image"] = segment.Data["url"]
+						return true
+					} else if segment.Type == "text" {
+						compile := regexp.MustCompile(`\d+`)
+						compile.MatchString(event.GetPlainText())
+						state.Data["data"] = compile.FindStringSubmatch(event.GetPlainText())[1]
+						return true
 					}
 				}
 			}
 		}
-		return true
+		return false
 	}).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 		f := m[state.Data["type"].(string)]
 		link := ""
@@ -61,11 +77,6 @@ func MoInit() {
 			link = fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", data)
 		case ok1:
 			link = data1.(string)
-		default:
-			compile := regexp.MustCompile(`\d+`)
-			if compile.MatchString(event.GetPlainText()) {
-				link = fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", compile.FindStringSubmatch(event.GetPlainText())[1])
-			}
 		}
 		event.Send(message.Image(f(link)))
 	})

@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/guonaihong/gout"
 	"github.com/huoxue1/gg"
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
@@ -18,15 +17,6 @@ import (
 	"github.com/mxschmitt/playwright-go"
 	log "github.com/sirupsen/logrus"
 )
-
-var font []byte
-
-func init() {
-	err := gout.GET("https://codechina.csdn.net/m15082717021/image/-/raw/main/202109091139659.ttf").BindBody(&font).Do()
-	if err == nil {
-		log.Infoln("加载字体文件成功")
-	}
-}
 
 func init() {
 	plugin := leafBot.NewPlugin("微博热搜")
@@ -115,7 +105,7 @@ func draw(limit int) []byte {
 	//weibo, err := getData()
 	weibo, err := getDataAlApi(limit)
 	context.Fill()
-	if err := context.LoadFontFromBytes(font, 40); err != nil {
+	if err := context.LoadFontFromBytes(leafBot.GetFont(), 40); err != nil {
 		log.Debugln(err)
 	}
 	context.SetRGB255(0, 0, 0)

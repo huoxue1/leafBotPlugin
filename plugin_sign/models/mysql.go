@@ -1,10 +1,11 @@
 package model
 
 import (
+	"log"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/huoxue1/leafBot"
 	"github.com/jmoiron/sqlx"
-	"log"
 )
 
 var Db *sqlx.DB

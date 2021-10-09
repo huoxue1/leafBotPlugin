@@ -2,11 +2,14 @@ package main
 
 import (
 	"flag"
+	"os"
+
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/cqhttp_ws_driver"
-	"github.com/huoxue1/leafBotPlugin/global"
 	log "github.com/sirupsen/logrus"
-	"os"
+
+	"github.com/huoxue1/leafBotPlugin/global"
+
 	// 导入插件
 	_ "github.com/huoxue1/leafBotPlugin/pluginBlackList"
 	_ "github.com/huoxue1/leafBotPlugin/pluginDayImage"
@@ -25,16 +28,12 @@ import (
 	_ "github.com/huoxue1/leafBotPlugin/pluginWeibo"
 	_ "github.com/huoxue1/leafBotPlugin/plugin_fakeMsg"
 	_ "github.com/huoxue1/leafBotPlugin/plugin_friendRequest"
+	_ "github.com/huoxue1/leafBotPlugin/plugin_gif"
 	_ "github.com/huoxue1/leafBotPlugin/plugin_localStorage"
-
-	"github.com/huoxue1/leafBotPlugin/plugin_gif"
+	_ "github.com/huoxue1/leafBotPlugin/plugin_pixiv"
 )
 
 var VERSION = "UnKnow"
-
-func init() {
-	plugin_gif.MoInit()
-}
 
 func main() {
 	log.Infoln("当前版本------->  " + VERSION)
