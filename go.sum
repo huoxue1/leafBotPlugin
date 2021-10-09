@@ -161,8 +161,6 @@ github.com/hjson/hjson-go v3.1.0+incompatible/go.mod h1:qsetwF8NlsTsOTwZTApNlTCe
 github.com/huoxue1/gg v1.3.1-0.20210909022355-795dba57682a/go.mod h1:fUbidWJbgI9Gc/FNaCATEcM0KjDGRGSdEVDoLSmqHJk=
 github.com/huoxue1/gg v1.3.1-0.20210909025831-836d8040c759 h1:n0UPAaRa7nq0hPd4TUdQemZ1KZgwQhk1o3S1IeA4+5s=
 github.com/huoxue1/gg v1.3.1-0.20210909025831-836d8040c759/go.mod h1:fUbidWJbgI9Gc/FNaCATEcM0KjDGRGSdEVDoLSmqHJk=
-github.com/huoxue1/leafBot v1.1.5-0.20211009141248-05644496e8e7 h1:sC6rpnQCNo0yGq9iEifybTXKN6pX+DhFYRnL6XvfhMg=
-github.com/huoxue1/leafBot v1.1.5-0.20211009141248-05644496e8e7/go.mod h1:msMnFF3OjsNfWiERWY1CbbGw0ld0xW7P1IBIEApYM/8=
 github.com/huoxue1/leafBot v1.1.5-0.20211009152224-b5808c51cd81 h1:RslUgOYKuo5V8KsoFAvZK9SlnVtPnZhSMNYN+wf185A=
 github.com/huoxue1/leafBot v1.1.5-0.20211009152224-b5808c51cd81/go.mod h1:msMnFF3OjsNfWiERWY1CbbGw0ld0xW7P1IBIEApYM/8=
 github.com/huoxue1/lorca v0.1.11 h1:B5x4Xta8rauGCERoCHY7nWg2z1GUrksf9ycZGHwLs4Q=
