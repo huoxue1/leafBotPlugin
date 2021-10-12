@@ -3,10 +3,8 @@ package pixiv
 import (
 	"encoding/base64"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/url"
-	"os"
 
 	"github.com/NateScarlet/pixiv/pkg/artwork"
 	client2 "github.com/NateScarlet/pixiv/pkg/client"
@@ -63,7 +61,6 @@ func Search(event leafBot.Event, keyWords string) message.Message {
 		log.Errorln(err.Error())
 	}
 	d := gout.New(c)
-	//dir, _ := os.Getwd()
 	m := message.Message{}
 	result.ForEach(func(key gjson.Result, value gjson.Result) bool {
 		text := "ID: " + value.Get("id").String() + "\ntitle: " + value.Get("title").String() + "\ndescription:" + value.Get("description").String() + "\n"
@@ -73,15 +70,34 @@ func Search(event leafBot.Event, keyWords string) message.Message {
 			log.Errorln(err.Error())
 			return true
 		}
-		err = ioutil.WriteFile("./tmp/img/"+value.Get("id").String()+".jpg", resp, 0666)
-		if err != nil {
-			return false
-		}
 		m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64://%v]", base64.StdEncoding.EncodeToString(resp))))
 		return true
 	})
 	log.Debugln(m)
 	return m
+}
+
+// GetDataByID
+/**
+ * @Description:
+ * @param id
+ * example
+ */
+func GetDataByID(id string) (string, error) {
+	ctx := context.Background()
+	ctx = client2.With(ctx, client)
+	i := &artwork.Artwork{ID: id}
+	err := i.Fetch(ctx)
+	if err != nil {
+		return "", err
+	}
+	d := gout.New(c)
+	var resp []byte
+	err = d.GET(i.Image.Original).BindBody(&resp).SetHeader(headers).Do()
+	if err != nil {
+		return "", err
+	}
+	return base64.StdEncoding.EncodeToString(resp), err
 }
 
 // GetWeek
@@ -126,7 +142,6 @@ func GetWeek(event leafBot.Event, model string) message.Message {
 	}
 	d := gout.New(c)
 	m := message.Message{}
-	dir, _ := os.Getwd()
 	for _, item := range r.Items {
 		//if len(m) > 10 {
 		//	break
@@ -134,20 +149,15 @@ func GetWeek(event leafBot.Event, model string) message.Message {
 
 		fmt.Println(item.JSON.Get("url"))
 		var resp []byte
-		err := d.GET(item.JSON.Get("url").String()).BindBody(&resp).SetHeader(headers).Do()
+		err := d.GET(item.Image.Original).BindBody(&resp).SetHeader(headers).Do()
 		if err != nil {
 			log.Errorln(err.Error())
 			return nil
 		}
-		err = ioutil.WriteFile("./tmp/img/"+item.ID+".jpg", resp, 0666)
-		if err != nil {
-			break
-		}
 		text := "ID: " + item.ID + "\nauthor: " + item.Author.Name + "\ntitle: " + item.Title + "\ndescription:" + item.Description + "\n"
 
-		m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=file:///%v]", dir+"/tmp/img/"+item.ID+".jpg")))
+		m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64:///%v]", base64.StdEncoding.EncodeToString(resp))))
 		// m = append(m, mess)
 	}
-	log.Debugln(m)
 	return m
 }

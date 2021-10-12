@@ -2,6 +2,7 @@ package plugin_pixiv
 
 import (
 	"encoding/base64"
+	"strconv"
 
 	"github.com/guonaihong/gout"
 	"github.com/huoxue1/leafBot"
@@ -51,6 +52,28 @@ func pixiv() {
 				}
 				return true
 			})
+		} else {
+			if len(state.Args) < 1 {
+				return
+			}
+			data, err := pixiv2.GetDataByID(state.Args[0])
+			if err != nil {
+				return
+			}
+			id, err := strconv.Atoi(state.Args[0])
+			if err != nil {
+				return
+			}
+			i := Image{
+				ID:      uuid.NewV4().String(),
+				ImageID: int64(id),
+				Content: data,
+			}
+			err = db.Insert("image", &i)
+			if err != nil {
+				return
+			}
+			event.Send(message.Message{message.Text("已成功添加图片，id:" + state.Args[0]), message.Image("base64://" + data)})
 		}
 	})
 
