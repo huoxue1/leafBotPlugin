@@ -3,6 +3,7 @@ package pixiv
 import (
 	"encoding/base64"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"sync"
@@ -17,13 +18,21 @@ import (
 	"github.com/huoxue1/leafBot/message"
 )
 
+func init() {
+	engine, err := leafBot.GetEngine()
+	if err != nil {
+		return
+	}
+	engine.StaticFS("/tmp", http.Dir("./tmp"))
+}
+
 var (
 	c         *http.Client
 	client    *client2.Client
 	PHPSESSID = ""
 	headers   = map[string]string{
 		"User-Agent": client2.DefaultUserAgent,
-		"Referer":    "https://www.pixiv.net/",
+		"Referer":    "https://i.pximg.net/",
 	}
 )
 
@@ -77,15 +86,23 @@ func Search(event leafBot.Event, keyWords string) message.Message {
 			defer wait.Done()
 			defer lock.Unlock()
 			defer log.Infoln("下载成功", artwork2.ID)
+			fmt.Println(artwork2.Image.Thumb)
 			text := "ID: " + artwork2.ID + "\ntitle: " + artwork2.Title + "\ndescription:" + artwork2.Description + "\n"
-			var resp []byte
-			err := d.GET(artwork2.Image.Thumb).BindBody(&resp).SetHeader(headers).Do()
+			//var resp []byte
+			response, err := d.GET(artwork2.Image.Thumb).SetHeader(headers).Response()
 			if err != nil {
 				log.Errorln(err.Error())
 				return
 			}
+			defer response.Body.Close()
+			bytes, err := io.ReadAll(response.Body)
+			if err != nil {
+				log.Errorln(err.Error())
+				return
+			}
+
 			lock.Lock()
-			m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64://%v]", base64.StdEncoding.EncodeToString(resp))))
+			m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64://%v]", base64.StdEncoding.EncodeToString(bytes))))
 		}(data)
 	}
 	wait.Wait()
@@ -169,15 +186,23 @@ func GetWeek(event leafBot.Event, model string) message.Message {
 			defer wait.Done()
 			defer lock.Unlock()
 			defer log.Infoln("下载成功", rankItem.ID)
-			var resp []byte
-			err := d.GET(rankItem.Image.Regular).BindBody(&resp).SetHeader(headers).Do()
+			//var resp []byte
+			fmt.Println(rankItem.Image.Regular)
+			response, err := d.GET(rankItem.Image.Regular).SetHeader(headers).Response()
+			if err != nil {
+				log.Errorln(err.Error())
+				return
+			}
+			fmt.Println(response.Status)
+			defer response.Body.Close()
+			bytes, err := io.ReadAll(response.Body)
 			if err != nil {
 				log.Errorln(err.Error())
 				return
 			}
 			text := "ID: " + rankItem.ID + "\nauthor: " + rankItem.Author.Name + "\ntitle: " + rankItem.Title + "\ndescription:" + rankItem.Description + "\n"
 			lock.Lock()
-			m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64:///%v]", base64.StdEncoding.EncodeToString(resp))))
+			m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64://%v]", base64.StdEncoding.EncodeToString(bytes))))
 
 			// m = append(m, mess)
 		}(item)
