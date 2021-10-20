@@ -68,7 +68,7 @@ func Search(event leafBot.Event, keyWords string) message.Message {
 	datas := result.Artworks()
 	d := gout.New(c)
 	m := message.Message{}
-	var lock sync.Locker
+	var lock sync.Mutex
 	var wait sync.WaitGroup
 	wait.Add(len(result.Artworks()))
 
@@ -158,7 +158,7 @@ func GetWeek(event leafBot.Event, model string) message.Message {
 	}
 	d := gout.New(c)
 	m := message.Message{}
-	var lock sync.Locker
+	var lock sync.Mutex
 	var wait sync.WaitGroup
 	wait.Add(len(r.Items))
 	for _, item := range r.Items {
@@ -170,7 +170,7 @@ func GetWeek(event leafBot.Event, model string) message.Message {
 			defer lock.Unlock()
 			defer log.Infoln("下载成功", rankItem.ID)
 			var resp []byte
-			err := d.GET(rankItem.Image.Original).BindBody(&resp).SetHeader(headers).Do()
+			err := d.GET(rankItem.Image.Regular).BindBody(&resp).SetHeader(headers).Do()
 			if err != nil {
 				log.Errorln(err.Error())
 				return
