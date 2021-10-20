@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	FakeMsg()
+	go FakeMsg()
 }
 
 func FakeMsg() {

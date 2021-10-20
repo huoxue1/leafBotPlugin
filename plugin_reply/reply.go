@@ -1,16 +1,17 @@
 package plugin_reply
 
 import (
+	"io"
+	"os"
+
 	"github.com/huoxue1/leafBot"
 	log "github.com/sirupsen/logrus"
 	"github.com/tidwall/gjson"
-	"io"
-	"os"
 )
 
 func init() {
 	if InitFile() {
-		InitReply()
+		go InitReply()
 	}
 }
 

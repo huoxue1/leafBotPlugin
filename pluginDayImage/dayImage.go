@@ -2,11 +2,12 @@ package pluginDayImage
 
 import (
 	"encoding/json"
-	"github.com/huoxue1/leafBot" //nolint:gci
-	"github.com/huoxue1/leafBot/message"
 	"io"
 	"net/http"
 	"strconv"
+
+	"github.com/huoxue1/leafBot" //nolint:gci
+	"github.com/huoxue1/leafBot/message"
 )
 
 type dayPicture struct {
@@ -18,7 +19,7 @@ type dayPicture struct {
 }
 
 func init() {
-	UseDayImage()
+	go UseDayImage()
 }
 
 func UseDayImage() {

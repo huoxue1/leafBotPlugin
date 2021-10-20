@@ -2,17 +2,17 @@ package pluginQrCode
 
 import (
 	"fmt" //nolint:gci
+
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
 )
 
 func init() {
-	UseCreateQrCode()
+	go UseCreateQrCode()
 }
 
 // UseCreateQrCode 生成二维码的插件
 func UseCreateQrCode() {
-
 	plugin := leafBot.NewPlugin("二维码生成")
 	plugin.SetHelp(map[string]string{
 		"/createQrcode": "生成二维码",
@@ -39,5 +39,4 @@ func UseCreateQrCode() {
 					}
 				}
 			})
-
 }

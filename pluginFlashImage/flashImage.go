@@ -1,14 +1,15 @@
 package pluginFlashImage
 
 import (
-	"github.com/huoxue1/leafBot" //nolint:gci
-	"github.com/huoxue1/leafBot/message"
 	"strconv"
 	"time" //nolint:gci
+
+	"github.com/huoxue1/leafBot" //nolint:gci
+	"github.com/huoxue1/leafBot/message"
 )
 
 func init() {
-	UseFlashImage(0)
+	go UseFlashImage(0)
 }
 
 /*

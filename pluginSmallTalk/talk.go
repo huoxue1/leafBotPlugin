@@ -2,17 +2,18 @@ package pluginSmallTalk
 
 import (
 	"encoding/json"
-	"github.com/huoxue1/leafBot"
-	"github.com/huoxue1/leafBot/message"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/huoxue1/leafBot"
+	"github.com/huoxue1/leafBot/message"
+	log "github.com/sirupsen/logrus"
 )
 
 func init() {
-	InitSmallTalk()
+	go InitSmallTalk()
 }
 
 func InitSmallTalk() {

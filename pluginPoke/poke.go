@@ -1,18 +1,19 @@
 package pluginPoke
 
 import (
-	"fmt" //nolint:gci
+	"fmt"  //nolint:gci
+	"time" //nolint:gci
+
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/mem"
-	"time" //nolint:gci
 )
 
 func init() {
 	plugin := leafBot.NewPlugin("戳一戳")
-	plugin.OnNotice("notify").
+	go plugin.OnNotice("notify").
 		AddRule(leafBot.OnlySuperUser).
 		SetPluginName("poke").
 		AddRule(
@@ -30,7 +31,6 @@ func init() {
 				} else {
 					bot.SendPrivateMsg(event.UserId, message.Text(msg))
 				}
-
 			})
 }
 

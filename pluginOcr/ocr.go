@@ -6,7 +6,7 @@ import (
 )
 
 func init() {
-	ocr()
+	go ocr()
 }
 
 // Ocr

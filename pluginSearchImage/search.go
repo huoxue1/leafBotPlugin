@@ -1,14 +1,15 @@
 package pluginSearchImage
 
 import (
+	"net/http"
+
 	"github.com/PuerkitoBio/goquery"
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
-	"net/http"
 )
 
 func init() {
-	InitImage()
+	go InitImage()
 }
 
 func InitImage() {

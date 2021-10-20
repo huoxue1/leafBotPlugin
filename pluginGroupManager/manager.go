@@ -1,9 +1,10 @@
 package pluginGroupManager
 
 import (
+	"strconv"
+
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
-	"strconv"
 )
 
 var (
@@ -11,7 +12,7 @@ var (
 )
 
 func init() {
-	Init()
+	go Init()
 	plugin = leafBot.NewPlugin("q群管理")
 }
 func Init() {
@@ -93,7 +94,6 @@ func Init() {
 		SetWeight(10).
 		AddHandle(
 			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
-
 				bot.SetGroupWholeBan(event.GroupId, true)
 				event.Send(message.Text("全员开始自闭"))
 			},
@@ -106,10 +106,8 @@ func Init() {
 		SetWeight(10).
 		AddHandle(
 			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
-
 				bot.SetGroupWholeBan(event.GroupId, false)
 				event.Send(message.Text("全员自闭结束"))
 			},
 		)
-
 }

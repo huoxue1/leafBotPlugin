@@ -2,13 +2,14 @@ package pluginWebsite
 
 import (
 	"encoding/base64"
+
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
 	"github.com/huoxue1/leafBot/utils"
 )
 
 func init() {
-	WebSiteScreenInit()
+	go WebSiteScreenInit()
 }
 
 func WebSiteScreenInit() {

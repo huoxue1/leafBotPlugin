@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"sync"
 
 	"github.com/NateScarlet/pixiv/pkg/artwork"
 	client2 "github.com/NateScarlet/pixiv/pkg/client"
 	"github.com/guonaihong/gout"
+	log "github.com/sirupsen/logrus"
+	"golang.org/x/net/context"
+
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
-	log "github.com/sirupsen/logrus"
-	"github.com/tidwall/gjson"
-	"golang.org/x/net/context"
 )
 
 var (
@@ -27,6 +28,10 @@ var (
 )
 
 func init() {
+	go initPixiv()
+}
+
+func initPixiv() {
 	id, ok := leafBot.DefaultConfig.Datas["pixiv_id"].(string)
 	if ok {
 		PHPSESSID = id
@@ -60,19 +65,29 @@ func Search(event leafBot.Event, keyWords string) message.Message {
 	if err != nil {
 		log.Errorln(err.Error())
 	}
+	datas := result.Artworks()
 	d := gout.New(c)
 	m := message.Message{}
-	result.ForEach(func(key gjson.Result, value gjson.Result) bool {
-		text := "ID: " + value.Get("id").String() + "\ntitle: " + value.Get("title").String() + "\ndescription:" + value.Get("description").String() + "\n"
-		var resp []byte
-		err := d.GET(value.Get("url").String()).BindBody(&resp).SetHeader(headers).Do()
-		if err != nil {
-			log.Errorln(err.Error())
-			return true
-		}
-		m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64://%v]", base64.StdEncoding.EncodeToString(resp))))
-		return true
-	})
+	var lock sync.Locker
+	var wait sync.WaitGroup
+	wait.Add(len(result.Artworks()))
+
+	for _, data := range datas {
+		go func(artwork2 artwork.Artwork) {
+			defer wait.Done()
+			text := "ID: " + artwork2.ID + "\ntitle: " + artwork2.Title + "\ndescription:" + artwork2.Description + "\n"
+			var resp []byte
+			err := d.GET(artwork2.Image.Thumb).BindBody(&resp).SetHeader(headers).Do()
+			if err != nil {
+				log.Errorln(err.Error())
+				return
+			}
+			lock.Lock()
+			m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64://%v]", base64.StdEncoding.EncodeToString(resp))))
+			lock.Unlock()
+		}(data)
+	}
+	wait.Wait()
 	log.Debugln(m)
 	return m
 }
@@ -142,22 +157,31 @@ func GetWeek(event leafBot.Event, model string) message.Message {
 	}
 	d := gout.New(c)
 	m := message.Message{}
+	var lock sync.Locker
+	var wait sync.WaitGroup
+	wait.Add(len(r.Items))
 	for _, item := range r.Items {
 		//if len(m) > 10 {
 		//	break
 		//}
+		go func(rankItem artwork.RankItem) {
+			defer wait.Done()
+			fmt.Println(rankItem.JSON.Get("url"))
+			var resp []byte
+			err := d.GET(rankItem.Image.Original).BindBody(&resp).SetHeader(headers).Do()
+			if err != nil {
+				log.Errorln(err.Error())
+				return
+			}
+			text := "ID: " + rankItem.ID + "\nauthor: " + rankItem.Author.Name + "\ntitle: " + rankItem.Title + "\ndescription:" + rankItem.Description + "\n"
+			lock.Lock()
+			m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64:///%v]", base64.StdEncoding.EncodeToString(resp))))
+			lock.Unlock()
 
-		fmt.Println(item.JSON.Get("url"))
-		var resp []byte
-		err := d.GET(item.Image.Original).BindBody(&resp).SetHeader(headers).Do()
-		if err != nil {
-			log.Errorln(err.Error())
-			return nil
-		}
-		text := "ID: " + item.ID + "\nauthor: " + item.Author.Name + "\ntitle: " + item.Title + "\ndescription:" + item.Description + "\n"
+			// m = append(m, mess)
+		}(item)
 
-		m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64:///%v]", base64.StdEncoding.EncodeToString(resp))))
-		// m = append(m, mess)
 	}
+	wait.Wait()
 	return m
 }

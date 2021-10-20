@@ -5,16 +5,17 @@ import (
 	"strconv"
 
 	"github.com/guonaihong/gout"
-	"github.com/huoxue1/leafBot"
-	"github.com/huoxue1/leafBot/message"
 	uuid "github.com/satori/go.uuid"
 	"github.com/tidwall/gjson"
+
+	"github.com/huoxue1/leafBot"
+	"github.com/huoxue1/leafBot/message"
 
 	pixiv2 "github.com/huoxue1/leafBotPlugin/global/pixiv"
 )
 
 func init() {
-	pixiv()
+	go pixiv()
 }
 
 func pixiv() {

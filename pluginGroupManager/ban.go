@@ -1,13 +1,14 @@
 package pluginGroupManager
 
 import ( //nolint:gci
+	"strconv" //nolint:gci
+
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
-	"strconv" //nolint:gci
 )
 
 func init() {
-	InitBanPlugin()
+	go InitBanPlugin()
 }
 
 func InitBanPlugin() {

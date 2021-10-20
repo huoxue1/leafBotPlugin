@@ -3,18 +3,19 @@ package pluginMusic
 import (
 	"encoding/json"
 	"errors"
-	"github.com/huoxue1/leafBot" //nolint:gci
-	"github.com/huoxue1/leafBot/message"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings" //nolint:gci
+
+	"github.com/huoxue1/leafBot" //nolint:gci
+	"github.com/huoxue1/leafBot/message"
+	log "github.com/sirupsen/logrus"
 )
 
 func init() {
-	UseMusicHandle()
+	go UseMusicHandle()
 }
 
 type MusicQQ struct {
@@ -332,7 +333,6 @@ func UseMusicHandle() {
 							return
 						}
 						event.Send(message.Music("163", int64(music.Result.Songs[0].ID)))
-
 					}
 				} else if state.Args[0] == "qq" {
 					log.Infoln("已触发qq音乐点歌")
@@ -352,7 +352,6 @@ func UseMusicHandle() {
 						event.Send(message.Music("qq", int64(music.Data.Song.List[0].Songid)))
 					}
 				}
-
 			})
 }
 

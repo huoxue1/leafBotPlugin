@@ -3,7 +3,7 @@ package pluginfriendRequest
 import "github.com/huoxue1/leafBot"
 
 func init() {
-	friendRequest()
+	go friendRequest()
 }
 
 func friendRequest() {

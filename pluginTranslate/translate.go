@@ -3,11 +3,12 @@ package pluginTranslate
 import (
 	"encoding/json"
 	"fmt" //nolint:gci
+	"io"  //nolint:gci
+	"net/http"
+
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
 	log "github.com/sirupsen/logrus"
-	"io" //nolint:gci
-	"net/http"
 )
 
 type Tran struct {
@@ -21,7 +22,7 @@ type Tran struct {
 }
 
 func init() {
-	UseTranslateHandle()
+	go UseTranslateHandle()
 }
 
 func UseTranslateHandle() {

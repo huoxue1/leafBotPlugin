@@ -3,9 +3,10 @@ package plugin_localStorage
 import (
 	"database/sql"
 	"fmt"
+	"os"
+
 	_ "github.com/mattn/go-sqlite3"
 	log "github.com/sirupsen/logrus"
-	"os"
 )
 
 var (

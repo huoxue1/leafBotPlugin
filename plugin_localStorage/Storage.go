@@ -1,13 +1,14 @@
 package plugin_localStorage
 
 import (
+	"os"
+
 	"github.com/huoxue1/leafBot"
 	log "github.com/sirupsen/logrus"
-	"os"
 )
 
 func init() {
-	initPath()
+	go initPath()
 }
 
 func initPath() {

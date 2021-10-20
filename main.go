@@ -4,12 +4,12 @@ import (
 	"flag"
 	"os"
 
-	"github.com/huoxue1/leafBot"
-	"github.com/huoxue1/leafBot/cqhttp_ws_driver"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/huoxue1/leafBotPlugin/global"
+	"github.com/huoxue1/leafBot"
+	"github.com/huoxue1/leafBot/cqhttp_ws_driver"
 
+	"github.com/huoxue1/leafBotPlugin/global"
 	// 导入插件
 	_ "github.com/huoxue1/leafBotPlugin/pluginBlackList"
 	_ "github.com/huoxue1/leafBotPlugin/pluginDayImage"

@@ -3,7 +3,7 @@ package pluginGroupManager
 import "github.com/huoxue1/leafBot"
 
 func init() {
-	WelcomeInit()
+	go WelcomeInit()
 }
 
 // WelcomeInit

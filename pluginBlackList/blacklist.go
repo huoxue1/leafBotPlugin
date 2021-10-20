@@ -3,17 +3,18 @@ package pluginBlackList
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/huoxue1/leafBot"
-	"github.com/huoxue1/leafBot/message"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/huoxue1/leafBot"
+	"github.com/huoxue1/leafBot/message"
+	log "github.com/sirupsen/logrus"
 )
 
 func init() {
-	InitBlackList("/config/blackList.json")
+	go InitBlackList("/config/blackList.json")
 }
 
 type blackList struct {
@@ -90,7 +91,6 @@ func InitBlackList(filePath string) {
 					return
 				}
 				event.Send(message.Text("添加黑名单成功"))
-
 			})
 
 	plugin.OnCommand("/add_blackList_group").
@@ -112,7 +112,6 @@ func InitBlackList(filePath string) {
 					return
 				}
 				event.Send(message.Text("添加黑名单成功"))
-
 			})
 
 	plugin.OnCommand("/get_blackList").SetPluginName("获取黑名单列表").AddRule(leafBot.OnlySuperUser).AddAllies("获取黑名单").SetBlock(false).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
@@ -126,7 +125,5 @@ func InitBlackList(filePath string) {
 		}
 
 		event.Send(message.Text(msg))
-
 	})
-
 }

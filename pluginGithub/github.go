@@ -2,14 +2,15 @@ package pluginGithub
 
 import (
 	"fmt" //nolint:gci
+	"regexp"
+	"strings"
+
 	"github.com/google/go-github/v35/github"
 	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/message"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
-	"regexp"
-	"strings"
 )
 
 var (
@@ -18,11 +19,10 @@ var (
 )
 
 func init() {
-	PluginInit()
+	go PluginInit()
 }
 
 func githubInit() {
-
 	if leafBot.DefaultConfig.Plugins.GithubToken == "" {
 		log.Errorln("github_token not found")
 	}
@@ -92,7 +92,6 @@ func PluginInit() {
 func getResponseMsg(owner, resp string) (string, error) {
 	repository, _, err := client.Repositories.Get(ctx, owner, resp)
 	if err != nil {
-
 		return "", err
 	}
 	msg := fmt.Sprintf("%v\nDescription: %v\nStar/Fork/Issue: %d / %d / %d\nLanguage: %v\nLicense: %v\nLastPushed: %v\nJump:%v",
@@ -116,7 +115,6 @@ func SearchResponse(ctx context.Context) ([]string, error) {
 		return nil, err
 	}
 	for _, repository := range repositories.Repositories {
-
 		msg := fmt.Sprintf("%v\nDescription: %v\nStar/Fork/Issue: %d / %d / %d\nLanguage: %v\nLicense: \nLastPushed: %v\nJump:%v",
 			repository.GetName(),
 			repository.GetDescription(),
