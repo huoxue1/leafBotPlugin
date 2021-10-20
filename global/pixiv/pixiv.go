@@ -75,6 +75,8 @@ func Search(event leafBot.Event, keyWords string) message.Message {
 	for _, data := range datas {
 		go func(artwork2 artwork.Artwork) {
 			defer wait.Done()
+			defer lock.Unlock()
+			defer log.Infoln("下载成功", artwork2.ID)
 			text := "ID: " + artwork2.ID + "\ntitle: " + artwork2.Title + "\ndescription:" + artwork2.Description + "\n"
 			var resp []byte
 			err := d.GET(artwork2.Image.Thumb).BindBody(&resp).SetHeader(headers).Do()
@@ -84,7 +86,6 @@ func Search(event leafBot.Event, keyWords string) message.Message {
 			}
 			lock.Lock()
 			m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64://%v]", base64.StdEncoding.EncodeToString(resp))))
-			lock.Unlock()
 		}(data)
 	}
 	wait.Wait()
@@ -166,7 +167,8 @@ func GetWeek(event leafBot.Event, model string) message.Message {
 		//}
 		go func(rankItem artwork.RankItem) {
 			defer wait.Done()
-			fmt.Println(rankItem.JSON.Get("url"))
+			defer lock.Unlock()
+			defer log.Infoln("下载成功", rankItem.ID)
 			var resp []byte
 			err := d.GET(rankItem.Image.Original).BindBody(&resp).SetHeader(headers).Do()
 			if err != nil {
@@ -176,11 +178,9 @@ func GetWeek(event leafBot.Event, model string) message.Message {
 			text := "ID: " + rankItem.ID + "\nauthor: " + rankItem.Author.Name + "\ntitle: " + rankItem.Title + "\ndescription:" + rankItem.Description + "\n"
 			lock.Lock()
 			m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64:///%v]", base64.StdEncoding.EncodeToString(resp))))
-			lock.Unlock()
 
 			// m = append(m, mess)
 		}(item)
-
 	}
 	wait.Wait()
 	return m
