@@ -100,7 +100,7 @@ func Search(event leafBot.Event, keyWords string) message.Message {
 				log.Errorln(err.Error())
 				return
 			}
-
+			go leafBot.GetBotById(event.SelfId).SendGroupMsg(0, message.Image("base64://"+base64.StdEncoding.EncodeToString(bytes)))
 			lock.Lock()
 			m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64://%v]", base64.StdEncoding.EncodeToString(bytes))))
 		}(data)
@@ -200,6 +200,7 @@ func GetWeek(event leafBot.Event, model string) message.Message {
 				log.Errorln(err.Error())
 				return
 			}
+			go leafBot.GetBotById(event.SelfId).SendGroupMsg(0, message.Image("base64://"+base64.StdEncoding.EncodeToString(bytes)))
 			text := "ID: " + rankItem.ID + "\nauthor: " + rankItem.Author.Name + "\ntitle: " + rankItem.Title + "\ndescription:" + rankItem.Description + "\n"
 			lock.Lock()
 			m = append(m, message.CustomNode(event.Sender.NickName, int64(event.UserId), fmt.Sprintf(text+"[CQ:image,file=base64://%v]", base64.StdEncoding.EncodeToString(bytes))))
