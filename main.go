@@ -4,10 +4,10 @@ import (
 	"flag"
 	"os"
 
+	"github.com/huoxue1/leafBot/cqhttp_positive_ws_driver"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/huoxue1/leafBot"
-	"github.com/huoxue1/leafBot/cqhttp_ws_driver"
 
 	"github.com/huoxue1/leafBotPlugin/global"
 	// 导入插件
@@ -59,7 +59,7 @@ func main() {
 		}
 		os.Exit(3)
 	}
-	driver := cqhttp_ws_driver.NewDriver()
+	driver := cqhttp_positive_ws_driver.NewDriver()
 	leafBot.LoadDriver(driver)
 	leafBot.InitBots()
 	driver.Run()
