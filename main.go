@@ -4,7 +4,7 @@ import (
 	"flag"
 	"os"
 
-	"github.com/huoxue1/leafBot/cqhttp_positive_ws_driver"
+	"github.com/huoxue1/leafBot/cqhttp_reverse_ws_driver"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/huoxue1/leafBot"
@@ -26,6 +26,7 @@ import (
 	_ "github.com/huoxue1/leafBotPlugin/pluginTranslate"
 	_ "github.com/huoxue1/leafBotPlugin/pluginWebsite"
 	_ "github.com/huoxue1/leafBotPlugin/pluginWeibo"
+	_ "github.com/huoxue1/leafBotPlugin/plugin_course"
 	_ "github.com/huoxue1/leafBotPlugin/plugin_fakeMsg"
 	_ "github.com/huoxue1/leafBotPlugin/plugin_friendRequest"
 	_ "github.com/huoxue1/leafBotPlugin/plugin_gif"
@@ -59,7 +60,7 @@ func main() {
 		}
 		os.Exit(3)
 	}
-	driver := cqhttp_positive_ws_driver.NewDriver()
+	driver := cqhttp_reverse_ws_driver.NewDriver()
 	leafBot.LoadDriver(driver)
 	leafBot.InitBots()
 	driver.Run()
