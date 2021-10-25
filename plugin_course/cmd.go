@@ -21,7 +21,7 @@ func init() {
 var (
 	binds       = make(map[int64]string)
 	lock        = sync.Mutex{}
-	defaultFile = "./config/course/19网工.yml"
+	defaultFile = "19网工.yml"
 	weekTable   = map[string]int{
 		"一": 1,
 		"二": 2,
