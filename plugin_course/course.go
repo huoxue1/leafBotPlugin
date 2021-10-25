@@ -6,7 +6,6 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	"time"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/xuri/excelize/v2"
@@ -24,7 +23,7 @@ type Course struct {
 
 func getCourseFromYaml(file string) (map[int][]Course, error) {
 	contents := make(map[int][]Course, 7)
-	data, err := ioutil.ReadFile(file)
+	data, err := ioutil.ReadFile("./config/course/" + file)
 	if err != nil {
 		return nil, err
 	}
@@ -35,10 +34,9 @@ func getCourseFromYaml(file string) (map[int][]Course, error) {
 	return contents, nil
 }
 
-func getCourse(time time.Time) ([]Course, error) {
-	week, day := getWeek(time)
+func getCourse(week, day int, file string) ([]Course, error) {
 	fmt.Println(week, day)
-	xlsx, err := getCourseFromYaml("./config/course.yml")
+	xlsx, err := getCourseFromYaml(file)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +52,7 @@ func getCourse(time time.Time) ([]Course, error) {
 	return cs, nil
 }
 
-var c = []string{"D", "F", "H", "K", "L", "O", "P"}
+var c = []string{"C", "E", "G", "J", "K", "N", "O"}
 
 func parseXlsx(file string) (map[int][]Course, error) {
 	contents := make(map[int][]Course, 7)
