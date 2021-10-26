@@ -1,18 +1,35 @@
-#name: deploy
-#
-#on: [push, pull_request]
-#
-#
-#jobs:
-#  build:
-#    name: Build binary CI
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: checkout
-#        uses: actions/checkout@v2
-#
-#
+name: deploy
+
+on: [push, pull_request]
+
+
+jobs:
+  build:
+    name: Build binary CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Install ssh key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.KEY }}
+          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+
+      - name: login
+        run: ssh -l ${{ secrets.USERNAME }} -p ${{ secrets.HOST }}
+
+      - name: deploy
+        run : cd /home/ubuntu/app/Bot/bot_31808/leafBotPlugin && sudo chmod -R 777 quick_deploy.sh && sudo bash ./quick_deploy.sh
+
+
+
 #      - name: deploy
 #        uses: appleboy/ssh-action@master
 #        with:
