@@ -23,10 +23,10 @@ jobs:
 
 
       - name: login
-        run: ssh -l ${{ secrets.USERNAME }}  ${{ secrets.HOST }}
+        run: ssh -l ${{ secrets.USERNAME }}  ${{ secrets.HOST }} /bin/cd /home/ubuntu/app/Bot/bot_31808/leafBotPlugin && sudo chmod -R 777 quick_deploy.sh && sudo /bin/bash ./quick_deploy.sh
 
-      - name: deploy
-        run : cd /home/ubuntu/app/Bot/bot_31808/leafBotPlugin && sudo chmod -R 777 quick_deploy.sh && sudo bash ./quick_deploy.sh
+#      - name: deploy
+#        run :
 
 
 
