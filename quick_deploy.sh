@@ -2,7 +2,7 @@
 pkill main
 sudo git checkout .
 sudo git pull
-/home/ubuntu/go/bin/go build main.go
+/usr/local/go/bin/go build main.go
 nohup ./main > bot.log 2>&1 &
 # shellcheck disable=SC2046
 # shellcheck disable=SC2005
