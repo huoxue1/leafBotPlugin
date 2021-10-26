@@ -94,7 +94,7 @@ func cmd() {
 				if entry.IsDir() {
 					continue
 				}
-				course, err := getCourse(week, day, file)
+				course, err := getCourse(week, day, entry.Name())
 				if err != nil {
 					log.Errorln(err.Error())
 					return
@@ -161,7 +161,7 @@ func cmd() {
 				if entry.IsDir() {
 					continue
 				}
-				course, err := getCourse(week, day, file)
+				course, err := getCourse(week, day, entry.Name())
 				if err != nil {
 					log.Errorln(err.Error())
 					return
@@ -207,7 +207,7 @@ func cmd() {
 				if entry.IsDir() {
 					continue
 				}
-				course, err := getCourse(week, day, file)
+				course, err := getCourse(week, day, entry.Name())
 				if err != nil {
 					log.Errorln(err.Error())
 					return
