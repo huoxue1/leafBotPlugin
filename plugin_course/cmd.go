@@ -99,7 +99,7 @@ func cmd() {
 					log.Errorln(err.Error())
 					return
 				}
-				event.Send(message.Message{message.Text(file), message.Image("base64://" + draw(course))})
+				event.Send(message.Message{message.Text(entry.Name()), message.Image("base64://" + draw(course))})
 			}
 			return
 		}
@@ -166,7 +166,7 @@ func cmd() {
 					log.Errorln(err.Error())
 					return
 				}
-				event.Send(message.Message{message.Text(file), message.Image("base64://" + draw(course))})
+				event.Send(message.Message{message.Text(entry.Name()), message.Image("base64://" + draw(course))})
 			}
 			return
 		}
@@ -212,7 +212,7 @@ func cmd() {
 					log.Errorln(err.Error())
 					return
 				}
-				event.Send(message.Message{message.Text(file), message.Image("base64://" + draw(course))})
+				event.Send(message.Message{message.Text(entry.Name()), message.Image("base64://" + draw(course))})
 			}
 			return
 		}
