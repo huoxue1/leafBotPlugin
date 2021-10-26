@@ -4,10 +4,9 @@ import (
 	"flag"
 	"os"
 
+	"github.com/huoxue1/leafBot"
 	"github.com/huoxue1/leafBot/cqhttp_reverse_ws_driver"
 	log "github.com/sirupsen/logrus"
-
-	"github.com/huoxue1/leafBot"
 
 	"github.com/huoxue1/leafBotPlugin/global"
 	// 导入插件
@@ -37,6 +36,14 @@ import (
 var VERSION = "UnKnow"
 
 func main() {
+	go update()
+	driver := cqhttp_reverse_ws_driver.NewDriver()
+	leafBot.LoadDriver(driver)
+	leafBot.InitBots()
+	driver.Run()
+}
+
+func update() {
 	log.Infoln("当前版本------->  " + VERSION)
 	version, err := global.GetLastVersion()
 	if err != nil {
@@ -60,8 +67,4 @@ func main() {
 		}
 		os.Exit(3)
 	}
-	driver := cqhttp_reverse_ws_driver.NewDriver()
-	leafBot.LoadDriver(driver)
-	leafBot.InitBots()
-	driver.Run()
 }

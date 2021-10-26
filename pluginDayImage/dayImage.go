@@ -37,14 +37,14 @@ func UseDayImage() {
 					if err != nil {
 						return
 					}
-					bot.SendMsg(event.MessageType, event.UserId, event.GroupId, []message.MessageSegment{message.Text(image.Bing.Copyright), message.Image(image.Bing.URL)})
+					bot.(leafBot.OneBotApi).SendMsg(event.MessageType, event.UserId, event.GroupId, []message.MessageSegment{message.Text(image.Bing.Copyright), message.Image(image.Bing.URL)})
 				} else {
 					day, _ := strconv.Atoi(state.Args[0])
 					image, err := getDayImage(day)
 					if err != nil {
 						return
 					}
-					bot.SendMsg(event.MessageType, event.UserId, event.GroupId, []message.MessageSegment{message.Text(image.Bing.Copyright), message.Image(image.Bing.URL)})
+					bot.(leafBot.OneBotApi).SendMsg(event.MessageType, event.UserId, event.GroupId, []message.MessageSegment{message.Text(image.Bing.Copyright), message.Image(image.Bing.URL)})
 				}
 			})
 }

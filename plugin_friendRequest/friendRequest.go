@@ -13,14 +13,14 @@ func friendRequest() {
 	plugin.OnRequest("friend").SetWeight(10).SetPluginName("自动同意好友").AddHandle(func(event leafBot.Event, bot leafBot.Api) {
 		for _, secret := range leafBot.DefaultConfig.Plugins.AutoPassFriendRequest {
 			if secret == event.Comment {
-				bot.SetFriendAddRequest(event.Flag, true, "")
+				bot.(leafBot.OneBotApi).SetFriendAddRequest(event.Flag, true, "")
 				return
 			}
 		}
 		if len(leafBot.DefaultConfig.Plugins.AutoPassFriendRequest) == 0 {
-			bot.SetFriendAddRequest(event.Flag, true, "")
+			bot.(leafBot.OneBotApi).SetFriendAddRequest(event.Flag, true, "")
 			return
 		}
-		bot.SetFriendAddRequest(event.Flag, false, "")
+		bot.(leafBot.OneBotApi).SetFriendAddRequest(event.Flag, false, "")
 	})
 }

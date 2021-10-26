@@ -31,7 +31,7 @@ func ocr() {
 		if len(images) < 1 {
 			return
 		}
-		ocrImage := bot.OcrImage(images[0].Data["file"])
+		ocrImage := bot.(leafBot.OneBotApi).OcrImage(images[0].Data["file"])
 		mess := "识别结果:\n识别语言:" + ocrImage.Get("language").String()
 		for _, text := range ocrImage.Get("texts").Array() {
 			mess += "\n" + text.Get("text").String()

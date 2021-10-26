@@ -28,8 +28,8 @@ func Init() {
 					event.Send(message.Text("发生未知错误" + err.Error()))
 					return
 				}
-				bot.SetGroupAdmin(event.GroupId, ID, true)
-				nickName := bot.GetGroupMemberInfo(event.GroupId, ID, true).Get("nick_name").String()
+				bot.(leafBot.OneBotApi).SetGroupAdmin(event.GroupId, ID, true)
+				nickName := bot.(leafBot.OneBotApi).GetGroupMemberInfo(event.GroupId, ID, true).Get("nick_name").String()
 				event.Send(message.Text(nickName + "升为了管理！"))
 			})
 
@@ -45,8 +45,8 @@ func Init() {
 					event.Send(message.Text("发生未知错误" + err.Error()))
 					return
 				}
-				bot.SetGroupAdmin(event.GroupId, ID, false)
-				nickName := bot.GetGroupMemberInfo(event.GroupId, ID, true).Get("nick_name").String()
+				bot.(leafBot.OneBotApi).SetGroupAdmin(event.GroupId, ID, false)
+				nickName := bot.(leafBot.OneBotApi).GetGroupMemberInfo(event.GroupId, ID, true).Get("nick_name").String()
 				event.Send(message.Text(nickName + "失去了管理员的资格！"))
 			},
 		)
@@ -63,8 +63,8 @@ func Init() {
 					event.Send(message.Text("发生未知错误" + err.Error()))
 					return
 				}
-				bot.SetGroupKick(event.GroupId, ID, false)
-				nickName := bot.GetGroupMemberInfo(event.GroupId, ID, true).Get("nick_name").String()
+				bot.(leafBot.OneBotApi).SetGroupKick(event.GroupId, ID, false)
+				nickName := bot.(leafBot.OneBotApi).GetGroupMemberInfo(event.GroupId, ID, true).Get("nick_name").String()
 				event.Send(message.Text(nickName + "被移除了群聊！"))
 			},
 		)
@@ -81,8 +81,8 @@ func Init() {
 					event.Send(message.Text("发生未知错误" + err.Error()))
 					return
 				}
-				bot.SetGroupLeave(ID, true)
-				nickName := bot.GetGroupMemberInfo(event.GroupId, ID, true).Get("nick_name").String()
+				bot.(leafBot.OneBotApi).SetGroupLeave(ID, true)
+				nickName := bot.(leafBot.OneBotApi).GetGroupMemberInfo(event.GroupId, ID, true).Get("nick_name").String()
 				event.Send(message.Text(nickName + "被移除了群聊！"))
 			},
 		)
@@ -94,7 +94,7 @@ func Init() {
 		SetWeight(10).
 		AddHandle(
 			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
-				bot.SetGroupWholeBan(event.GroupId, true)
+				bot.(leafBot.OneBotApi).SetGroupWholeBan(event.GroupId, true)
 				event.Send(message.Text("全员开始自闭"))
 			},
 		)
@@ -106,7 +106,7 @@ func Init() {
 		SetWeight(10).
 		AddHandle(
 			func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
-				bot.SetGroupWholeBan(event.GroupId, false)
+				bot.(leafBot.OneBotApi).SetGroupWholeBan(event.GroupId, false)
 				event.Send(message.Text("全员自闭结束"))
 			},
 		)

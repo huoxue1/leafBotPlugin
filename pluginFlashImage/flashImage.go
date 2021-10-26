@@ -31,7 +31,7 @@ func UseFlashImage(userID int) {
 				strconv.Itoa(event.UserId) + "所发闪照")
 		}
 
-		bot.SendPrivateMsg(userID, []message.MessageSegment{mess, event.Message[0].Delete("type")})
+		bot.(leafBot.OneBotApi).SendPrivateMsg(userID, []message.MessageSegment{mess, event.Message[0].Delete("type")})
 	})
 }
 

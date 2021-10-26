@@ -26,7 +26,6 @@ func init() {
 }
 
 func UseTranslateHandle() {
-
 	plugin := leafBot.NewPlugin("翻译")
 	plugin.SetHelp(map[string]string{"ts": ""})
 	plugin.OnCommand("ts").
@@ -69,9 +68,7 @@ func UseTranslateHandle() {
 						return
 					}
 				}
-
 			})
-
 }
 
 func translate(text string, types string) (Tran, error) {

@@ -34,7 +34,7 @@ func pixiv() {
 		return true
 	}).AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 		if id, ok := state.Data["reply_id"]; ok {
-			bot.GetMsg(id.(int32)).Get("message").ForEach(func(key, value gjson.Result) bool {
+			bot.(leafBot.OneBotApi).GetMsg(id.(int32)).Get("message").ForEach(func(key, value gjson.Result) bool {
 				if value.Get("type").String() == "image" {
 					var resp []byte
 					err := gout.GET(value.Get("data.url").String()).BindBody(&resp).Do()
@@ -88,7 +88,7 @@ func pixiv() {
 		if len(state.Args) < 1 {
 			return
 		}
-		bot.SendGroupForwardMsg(event.GroupId, pixiv2.Search(event, state.Args[0]))
+		bot.(leafBot.OneBotApi).SendGroupForwardMsg(event.GroupId, pixiv2.Search(event, state.Args[0]))
 	})
 
 	plugin.OnCommand("榜单参数", leafBot.Option{
@@ -112,6 +112,6 @@ func pixiv() {
 			return
 		}
 		messages := pixiv2.GetWeek(event, state.Args[0])
-		bot.SendGroupForwardMsg(event.GroupId, messages)
+		bot.(leafBot.OneBotApi).SendGroupForwardMsg(event.GroupId, messages)
 	})
 }

@@ -84,6 +84,25 @@ func cmd() {
 			file = defaultFile
 		}
 		week, day := getWeek(time.Now())
+		if len(state.Args) > 0 && state.Args[0] == "all" {
+			dir, err := os.ReadDir("./config/course/")
+			if err != nil {
+				return
+			}
+
+			for _, entry := range dir {
+				if entry.IsDir() {
+					continue
+				}
+				course, err := getCourse(week, day, file)
+				if err != nil {
+					log.Errorln(err.Error())
+					return
+				}
+				event.Send(message.Message{message.Text(file), message.Image("base64://" + draw(course))})
+			}
+			return
+		}
 		course, err := getCourse(week, day, file)
 		if err != nil {
 			log.Errorln(err.Error())
@@ -126,8 +145,31 @@ func cmd() {
 		} else {
 			file = defaultFile
 		}
-		i := ming[state.RegexResult[1]]
+		i, ok := ming[state.RegexResult[1]]
+		if !ok {
+			event.Send(message.Text("请输入正确的查询"))
+			return
+		}
 		week, day := getWeek(time.Now().AddDate(0, 0, i))
+		if len(state.Args) > 0 && state.Args[0] == "all" {
+			dir, err := os.ReadDir("./config/course/")
+			if err != nil {
+				return
+			}
+
+			for _, entry := range dir {
+				if entry.IsDir() {
+					continue
+				}
+				course, err := getCourse(week, day, file)
+				if err != nil {
+					log.Errorln(err.Error())
+					return
+				}
+				event.Send(message.Message{message.Text(file), message.Image("base64://" + draw(course))})
+			}
+			return
+		}
 		course, err := getCourse(week, day, file)
 		if err != nil {
 			log.Errorln(err.Error())
@@ -155,6 +197,25 @@ func cmd() {
 			event.Send("请输入正确的内容")
 			return
 		}
+		if len(state.Args) > 0 && state.Args[0] == "all" {
+			dir, err := os.ReadDir("./config/course/")
+			if err != nil {
+				return
+			}
+
+			for _, entry := range dir {
+				if entry.IsDir() {
+					continue
+				}
+				course, err := getCourse(week, day, file)
+				if err != nil {
+					log.Errorln(err.Error())
+					return
+				}
+				event.Send(message.Message{message.Text(file), message.Image("base64://" + draw(course))})
+			}
+			return
+		}
 		course, err := getCourse(week, day, file)
 		if err != nil {
 			log.Errorln(err.Error())
@@ -162,6 +223,7 @@ func cmd() {
 		}
 		event.Send(message.Image("base64://" + draw(course)))
 	})
+
 	plugin.OnCommand("我的绑定").AddHandle(func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
 		value, ok := binds[int64(event.UserId)]
 		if ok {

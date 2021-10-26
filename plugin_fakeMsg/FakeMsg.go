@@ -50,6 +50,6 @@ func FakeMsg() {
 				return
 			}
 
-			bot.SendGroupForwardMsg(event.GroupId, messages)
+			bot.(leafBot.OneBotApi).SendGroupForwardMsg(event.GroupId, messages)
 		})
 }

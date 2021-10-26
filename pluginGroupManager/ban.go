@@ -49,7 +49,7 @@ func InitBanPlugin() {
 					return
 				}
 				for _, id := range banIds {
-					bot.SetGroupBan(event.GroupId, id, duration*60)
+					bot.(leafBot.OneBotApi).SetGroupBan(event.GroupId, id, duration*60)
 				}
 			})
 }
