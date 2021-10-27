@@ -6,6 +6,6 @@ sudo git pull
 /usr/local/go/bin/go build main.go
 nohup ./main > bot.log 2>&1 &
 # shellcheck disable=SC2046
-# shellcheck disable=SC2005
+
 echo $(date +%F%n%T) > do.log
 
