@@ -1,4 +1,5 @@
 #!/bin/bash
+screen -r leafBot
 pkill main
 sudo git checkout .
 sudo git pull
