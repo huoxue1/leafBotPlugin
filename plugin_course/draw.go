@@ -14,7 +14,7 @@ import (
 )
 
 func draw(courses []Course) string {
-	file, err := os.OpenFile("./config/model.png", os.O_RDONLY, 0666)
+	file, err := os.OpenFile("./config/model.png", os.O_RDONLY, 0o666)
 	if err != nil {
 		return ""
 	}
@@ -27,9 +27,9 @@ func draw(courses []Course) string {
 	if err != nil {
 		return ""
 	}
-	//d.DrawRectangle(185, 58, 205, 89)
-	//d.SetRGB255(100, 100, 0)
-	//d.Fill()
+	// d.DrawRectangle(185, 58, 205, 89)
+	// d.SetRGB255(100, 100, 0)
+	// d.Fill()
 	f := 0.0
 	id := 0
 	for _, cours := range courses {

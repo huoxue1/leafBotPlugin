@@ -52,6 +52,27 @@ func cmd() {
 		"x周周x课表":        "获取对应课表，例如：8周周一课表",
 		"xxxx年xx月xx日课表": "获取对应日期课表",
 	})
+	// plugin.OnRegex(`增加第(\d+)周周(.*?)[\n]id:(\d+)[\n]节数:(\d+)[\n]老师:(.*?)[\n]地点:(.*?)[\n]`).AddHandle(
+	//	func(event leafBot.Event, bot leafBot.Api, state *leafBot.State) {
+	//		week,err := strconv.Atoi(state.RegexResult[1])
+	//		if err != nil {
+	//			return
+	//		}
+	//		i,ok := weekTable[state.RegexResult[2]]
+	//		if !ok {
+	//			return
+	//		}
+	//		id, err := strconv.Atoi(state.RegexResult[3])
+	//		if err != nil {
+	//			return
+	//		}
+	//		jie, err := strconv.Atoi(state.RegexResult[4])
+	//		if err != nil {
+	//			return
+	//		}
+	//
+	//
+	//	})
 	plugin.OnCommand("bind", leafBot.Option{
 		PluginName: "bind",
 		Weight:     5,
@@ -244,7 +265,7 @@ func cmd() {
 		if err != nil {
 			return
 		}
-		var results = ""
+		results := ""
 		for _, entry := range dir {
 			if entry.IsDir() {
 				continue
@@ -275,7 +296,7 @@ func loadFile() {
 	if err != nil {
 		return
 	}
-	err = os.WriteFile("./config/course.yml", data, 0666)
+	err = os.WriteFile("./config/course.yml", data, 0o666)
 	if err != nil {
 		return
 	}

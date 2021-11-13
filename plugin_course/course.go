@@ -68,7 +68,7 @@ func parseXlsx(file string) (map[int][]Course, error) {
 			if err != nil {
 				return nil, err
 			}
-			//value = strings.ReplaceAll(value, " ", "")
+			// value = strings.ReplaceAll(value, " ", "")
 			if value != "" {
 				i2 := parse(value + "\n")
 				for _, course := range i2 {
@@ -87,7 +87,7 @@ func toFile(data map[int][]Course) {
 	if err != nil {
 		return
 	}
-	err = ioutil.WriteFile("course.yml", datas, 0666)
+	err = ioutil.WriteFile("course.yml", datas, 0o666)
 	if err != nil {
 		return
 	}

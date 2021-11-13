@@ -4,33 +4,33 @@ import (
 	"flag"
 	"os"
 
-	"github.com/huoxue1/leafBot"
-	"github.com/huoxue1/leafBot/cqhttp_reverse_ws_driver"
-	log "github.com/sirupsen/logrus"
+	"github.com/huoxue1/leafBot"                          // leafBot依赖
+	"github.com/huoxue1/leafBot/cqhttp_reverse_ws_driver" // 驱动插件，cqhttp反向链接
+	log "github.com/sirupsen/logrus"                      // 日志依赖
 
-	"github.com/huoxue1/leafBotPlugin/global"
+	"github.com/huoxue1/leafBotPlugin/global" // 全局工具类不
 	// 导入插件
-	_ "github.com/huoxue1/leafBotPlugin/pluginBlackList"
-	_ "github.com/huoxue1/leafBotPlugin/pluginDayImage"
-	_ "github.com/huoxue1/leafBotPlugin/pluginFlashImage"
-	_ "github.com/huoxue1/leafBotPlugin/pluginGithub"
-	_ "github.com/huoxue1/leafBotPlugin/pluginGroupManager"
-	_ "github.com/huoxue1/leafBotPlugin/pluginMusic"
-	_ "github.com/huoxue1/leafBotPlugin/pluginOcr"
-	_ "github.com/huoxue1/leafBotPlugin/pluginParseMessage"
-	_ "github.com/huoxue1/leafBotPlugin/pluginPoke"
-	_ "github.com/huoxue1/leafBotPlugin/pluginQrCode"
-	_ "github.com/huoxue1/leafBotPlugin/pluginSearchImage"
-	_ "github.com/huoxue1/leafBotPlugin/pluginSmallTalk"
-	_ "github.com/huoxue1/leafBotPlugin/pluginTranslate"
-	_ "github.com/huoxue1/leafBotPlugin/pluginWebsite"
-	_ "github.com/huoxue1/leafBotPlugin/pluginWeibo"
-	_ "github.com/huoxue1/leafBotPlugin/plugin_course"
-	_ "github.com/huoxue1/leafBotPlugin/plugin_fakeMsg"
-	_ "github.com/huoxue1/leafBotPlugin/plugin_friendRequest"
-	_ "github.com/huoxue1/leafBotPlugin/plugin_gif"
-	_ "github.com/huoxue1/leafBotPlugin/plugin_localStorage"
-	_ "github.com/huoxue1/leafBotPlugin/plugin_pixiv"
+	_ "github.com/huoxue1/leafBotPlugin/pluginBlackList"      // 黑名单插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginDayImage"       // 每日一图插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginFlashImage"     // 闪照拦截插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginGithub"         // github查询插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginGroupManager"   // 群管插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginMusic"          // 点歌插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginOcr"            // ocr图像识别插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginParseMessage"   // 特殊消息解析插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginPoke"           // 戳一戳获取服务器状态插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginQrCode"         // 验证码生成插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginSearchImage"    // 图片搜索插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginSmallTalk"      // 闲聊插件，使用青云客插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginTranslate"      // 翻译插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginWebsite"        // 网页截图插件
+	_ "github.com/huoxue1/leafBotPlugin/pluginWeibo"          // 微博热搜获取插件
+	_ "github.com/huoxue1/leafBotPlugin/plugin_course"        // 课程表插件
+	_ "github.com/huoxue1/leafBotPlugin/plugin_fakeMsg"       // 假消息生成插件
+	_ "github.com/huoxue1/leafBotPlugin/plugin_friendRequest" // 自动同意好友请求插件
+	_ "github.com/huoxue1/leafBotPlugin/plugin_gif"           // gif插件
+	_ "github.com/huoxue1/leafBotPlugin/plugin_localStorage"  // 本地存储插件
+	_ "github.com/huoxue1/leafBotPlugin/plugin_pixiv"         // 色图查询插件
 )
 
 var VERSION = "UnKnow"
