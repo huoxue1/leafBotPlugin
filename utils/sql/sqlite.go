@@ -1,5 +1,6 @@
-// Package sql 数据库/数据处理相关工具
-package utils
+// Package sql数据库/数据处理相关工具
+// 该文件来源于https://github.com/FloatTech/zbputils/blob/main/sql/sqlite.go
+package sql
 
 import (
 	"database/sql"
