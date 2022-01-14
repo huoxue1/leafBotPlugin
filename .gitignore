@@ -1,3 +1,4 @@
 *.yml
-/.idea
-/logs
+/.idea/
+/logs/
+/data/
