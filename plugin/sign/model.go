@@ -6,7 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/huoxue1/fan/utils"
+	"github.com/huoxue1/fan/utils/sql"
 )
 
 type Sign struct {
@@ -17,11 +17,11 @@ type Sign struct {
 }
 
 var (
-	db *utils.Sqlite
+	db *sql.Sqlite
 )
 
 func init() {
-	Db := new(utils.Sqlite)
+	Db := new(sql.Sqlite)
 	Db.DBPath = "./config/sign.db"
 	err := Db.Open()
 	if err != nil {
