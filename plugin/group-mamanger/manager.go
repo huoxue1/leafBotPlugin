@@ -23,7 +23,7 @@ func manager() {
 		for _, v := range ctx.Event.Message {
 			if v.Type == "at" {
 				qq, _ := strconv.Atoi(v.Data["qq"])
-				ctx.Bot.(leafbot.OneBotApi).SetGroupAdmin(ctx.Event.GroupId, qq, true)
+				ctx.Bot.(leafbot.OneBotAPI).SetGroupAdmin(ctx.Event.GroupId, qq, true)
 				ctx.Send(message.Text(fmt.Sprintf("%v已经升为管理员", qq)))
 			}
 		}
@@ -37,7 +37,7 @@ func manager() {
 		for _, v := range ctx.Event.Message {
 			if v.Type == "at" {
 				qq, _ := strconv.Atoi(v.Data["qq"])
-				ctx.Bot.(leafbot.OneBotApi).SetGroupAdmin(ctx.Event.GroupId, qq, false)
+				ctx.Bot.(leafbot.OneBotAPI).SetGroupAdmin(ctx.Event.GroupId, qq, false)
 				ctx.Send(message.Text(fmt.Sprintf("%v已被取消管理员", qq)))
 			}
 		}
@@ -50,7 +50,7 @@ func manager() {
 		for _, v := range ctx.Event.Message {
 			if v.Type == "at" {
 				qq, _ := strconv.Atoi(v.Data["qq"])
-				ctx.Bot.(leafbot.OneBotApi).SetGroupKick(ctx.Event.GroupId, qq, false)
+				ctx.Bot.(leafbot.OneBotAPI).SetGroupKick(ctx.Event.GroupId, qq, false)
 				ctx.Send(message.Text(fmt.Sprintf("%v已被踢出群聊", qq)))
 			}
 		}
