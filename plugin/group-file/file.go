@@ -2,6 +2,7 @@ package group_file
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/huoxue1/leafbot"
@@ -30,11 +31,16 @@ func fileHandle(ctx *leafbot.Context) {
 	}
 
 	if strings.HasSuffix(ctx.Event.File.Name, ".zip") {
+		// 下载压缩包文件
 		err := utils.DownloadFile(ctx.Event.File.FileUrl, "./data/temp/"+ctx.Event.File.Name)
 		if err != nil {
 			log.Errorln(err.Error())
 			return
 		}
+		// 退出时删除文件
+		defer os.Remove("./data/temp/" + ctx.Event.File.Name)
+
+		// 获取压缩包中的所有文件
 		files, err := utils.GetZipFiles("./data/temp/" + ctx.Event.File.Name)
 		if err != nil {
 			log.Errorln("获取压缩文件出现了错误" + err.Error())

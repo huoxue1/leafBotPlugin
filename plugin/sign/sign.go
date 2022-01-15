@@ -68,7 +68,7 @@ func sign(ctx *leafbot.Context) {
 	s.LastSign = time.Now().Unix()
 	update(*s)
 	ctx.Send(append(message.Message{},
-		//message.Image(fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%d&s=640", ctx.Event.UserId)).Add("cache", 0),
+		message.Image(fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%d&s=640", ctx.Event.UserId)).Add("cache", 0),
 		message.Text(fmt.Sprintf("恭喜你，签到成功,积分增加%d,当前共有积分%d,已连续签到%d天", n, s.Fraction, s.ContinueSign)),
 		message.At(int64(ctx.Event.UserId))))
 
