@@ -37,7 +37,7 @@ func init() {
 		}
 		users := ctx.GetAtUsers()
 		if len(users) > 0 {
-			ctx.Send(message.Message{message.Reply(int64(ctx.Event.MessageID)), message.Image("base64://" + f(fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", users[0])))})
+			ctx.Send(message.Message{message.Reply(int64(ctx.Event.MessageID)), message.Image(f(fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", users[0])))})
 		} else {
 			if len(ctx.GetImages()) > 0 {
 				ctx.Send(message.Message{message.Reply(int64(ctx.Event.MessageID)), message.Image(f(ctx.GetImages()[0].Data["url"]))})
@@ -48,7 +48,7 @@ func init() {
 					if err != nil {
 						return
 					}
-					ctx.Send(message.Message{message.Reply(int64(ctx.Event.MessageID)), message.Image("base64://" + f(fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", id)))})
+					ctx.Send(message.Message{message.Reply(int64(ctx.Event.MessageID)), message.Image(f(fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%v&s=100", id)))})
 				}
 			}
 		}
