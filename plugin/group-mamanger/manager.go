@@ -24,8 +24,8 @@ func manager() {
 	}).Handle(func(ctx *leafbot.Context) {
 		for _, v := range ctx.Event.Message {
 			if v.Type == "at" {
-				qq, _ := strconv.Atoi(v.Data["qq"])
-				ctx.Bot.(leafbot.OneBotAPI).SetGroupAdmin(ctx.Event.GroupId, qq, true)
+				qq, _ := strconv.ParseInt(v.Data["qq"], 10, 64)
+				ctx.SetGroupAdmin(ctx.Event.GroupId, qq, true)
 				ctx.Send(message.Text(fmt.Sprintf("%v已经升为管理员", qq)))
 			}
 		}
@@ -39,7 +39,7 @@ func manager() {
 	}).Handle(func(ctx *leafbot.Context) {
 		for _, v := range ctx.Event.Message {
 			if v.Type == "at" {
-				qq, _ := strconv.Atoi(v.Data["qq"])
+				qq, _ := strconv.ParseInt(v.Data["qq"], 10, 64)
 				ctx.Bot.(leafbot.OneBotAPI).SetGroupAdmin(ctx.Event.GroupId, qq, false)
 				ctx.Send(message.Text(fmt.Sprintf("%v已被取消管理员", qq)))
 			}
@@ -53,7 +53,7 @@ func manager() {
 	}).Handle(func(ctx *leafbot.Context) {
 		for _, v := range ctx.Event.Message {
 			if v.Type == "at" {
-				qq, _ := strconv.Atoi(v.Data["qq"])
+				qq, _ := strconv.ParseInt(v.Data["qq"], 10, 64)
 				ctx.Bot.(leafbot.OneBotAPI).SetGroupKick(ctx.Event.GroupId, qq, false)
 				ctx.Send(message.Text(fmt.Sprintf("%v已被踢出群聊", qq)))
 			}
@@ -67,7 +67,7 @@ func manager() {
 		Rules:  []leafbot.Rule{UserSuperUser},
 	}).Handle(func(ctx *leafbot.Context) {
 		id, _ := strconv.Atoi(ctx.State.RegexResult[1])
-		ctx.SetGroupLeave(id, true)
+		ctx.SetGroupLeave(int64(id), true)
 		ctx.Send(message.Text("已退出群聊：%d", id))
 	})
 	// 开启全员禁言
@@ -103,7 +103,7 @@ func manager() {
 		default:
 			duration = duration * 60
 		}
-		ctx.SetGroupBan(ctx.Event.GroupId, ctx.Event.UserId, duration)
+		ctx.SetGroupBan(ctx.Event.GroupId, ctx.Event.UserId, int64(duration))
 		ctx.Send(append(message.Message{}, message.Text("先去休息吧"), message.At(int64(ctx.Event.UserId))))
 	})
 
@@ -125,7 +125,7 @@ func manager() {
 		if err != nil {
 			return
 		}
-		ctx.SetGroupCard(ctx.Event.GroupId, int(id), ctx.State.RegexResult[2])
+		ctx.SetGroupCard(ctx.Event.GroupId, id, ctx.State.RegexResult[2])
 	})
 
 	plugin.OnRegex(`^禁言.*?(\d+).*?\s(\d+)(.*)`, leafbot.Option{
@@ -154,7 +154,7 @@ func manager() {
 		if duration >= 43200 {
 			duration = 43199 // qq禁言最大时长为一个月
 		}
-		ctx.SetGroupBan(ctx.Event.GroupId, int(id), int(duration))
+		ctx.SetGroupBan(ctx.Event.GroupId, id, duration)
 		ctx.Send(message.Text("小黑屋收留成功"))
 	})
 
@@ -167,7 +167,7 @@ func manager() {
 		if err != nil {
 			return
 		}
-		ctx.SetGroupBan(ctx.Event.GroupId, int(id), 0)
+		ctx.SetGroupBan(ctx.Event.GroupId, id, 0)
 	})
 
 	plugin.OnFullMatch("123", leafbot.Option{

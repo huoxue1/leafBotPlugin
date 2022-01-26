@@ -29,12 +29,13 @@ func init() {
 		return
 	}
 	db = Db
+	createTable()
 }
 
 func createTable() {
 	err := db.Create("sign", &Sign{})
 	if err != nil {
-		log.Errorln("创建数据库失败")
+		log.Errorln(err.Error())
 		return
 	}
 }

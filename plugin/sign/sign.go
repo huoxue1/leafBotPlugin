@@ -59,13 +59,9 @@ func sign(ctx *leafbot.Context) {
 	s.Fraction += int64(n)
 	if isYesterday(s.LastSign) {
 		s.ContinueSign++
-		err := update(*s)
-		if err != nil {
-			log.Errorln("更新用户信息出现了错误")
-			return
-		}
 	}
 	s.LastSign = time.Now().Unix()
+
 	update(*s)
 	ctx.Send(append(message.Message{},
 		message.Image(fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%d&s=640", ctx.Event.UserId)).Add("cache", 0),
@@ -85,8 +81,7 @@ func isToday(times int64) bool {
 
 func isYesterday(times int64) bool {
 	signTime := time.Unix(times, 0)
-	duration, _ := time.ParseDuration("-1d")
-	yesterday := time.Now().Add(duration)
+	yesterday := time.Now().AddDate(0, 0, -1)
 	if yesterday.Year() == signTime.Year() && yesterday.Month() == signTime.Month() && yesterday.Day() == signTime.Day() {
 		return true
 	}
