@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/huoxue1/leafbot"
-	"github.com/huoxue1/leafbot/driver/cqhttp_reverse_ws_driver"
+	"github.com/huoxue1/leafbot/driver/cqhttp_default_driver"
 
 	_ "github.com/huoxue1/fan/plugin/gif"
 	_ "github.com/huoxue1/fan/plugin/group-file"
@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	driver := cqhttp_reverse_ws_driver.NewDriver()
+	driver := cqhttp_default_driver.NewDriver()
 	leafbot.LoadDriver(driver)
 	leafbot.InitBots()
 	driver.Run()
