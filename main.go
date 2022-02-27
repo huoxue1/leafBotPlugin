@@ -4,6 +4,7 @@ import (
 	"github.com/huoxue1/leafbot"
 	"github.com/huoxue1/leafbot/driver/cqhttp_default_driver"
 
+	_ "github.com/huoxue1/fan/plugin/course"
 	_ "github.com/huoxue1/fan/plugin/gif"
 	_ "github.com/huoxue1/fan/plugin/group-file"
 	_ "github.com/huoxue1/fan/plugin/group-mamanger"

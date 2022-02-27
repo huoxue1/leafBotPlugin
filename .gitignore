@@ -1,4 +1,5 @@
-/.idea/
-/logs/
-/data/
+/.idea
+/logs
+/data
 **/config.yml
+/plugin/course/parse/
