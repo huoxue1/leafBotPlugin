@@ -1,4 +1,4 @@
-package sign
+package model
 
 import (
 	"fmt"
@@ -19,6 +19,15 @@ type Sign struct {
 var (
 	db *sql.Sqlite
 )
+
+func UpdateFraction(qq int64, fraction int64) {
+	haveContent(qq)
+	s := new(Sign)
+	s.QQ = qq
+	_ = query(s)
+	s.Fraction += fraction
+	_ = update(*s)
+}
 
 func init() {
 	Db := new(sql.Sqlite)
@@ -63,12 +72,24 @@ func haveContent(qq int64) {
 	}
 }
 
+func HavaContent(qq int64) {
+	haveContent(qq)
+}
+
+func Query(sign2 *Sign) error {
+	return query(sign2)
+}
+
 func query(sign *Sign) error {
+	haveContent(sign.QQ)
 	err := db.Find("sign", sign, fmt.Sprintf("where qq=%v", sign.QQ))
 	if err != nil {
 		return err
 	}
 	return err
+}
+func Update(sign2 Sign) error {
+	return update(sign2)
 }
 
 func update(sign Sign) error {

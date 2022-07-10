@@ -78,16 +78,16 @@ func parseXlsx(file string) (map[int][]Course, error) {
 		}
 		contents[index+1] = courses
 	}
-	toFile(contents)
+	toFile(contents, "course.yml")
 	return contents, nil
 }
 
-func toFile(data map[int][]Course) {
+func toFile(data map[int][]Course, fileName string) {
 	datas, err := yaml.Marshal(&data)
 	if err != nil {
 		return
 	}
-	err = ioutil.WriteFile("course.yml", datas, 0o666)
+	err = ioutil.WriteFile(fileName, datas, 0o666)
 	if err != nil {
 		return
 	}

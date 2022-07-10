@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -13,8 +14,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+const ALL = "all"
+
 func init() {
-	cmd()
+	Cmd()
 	readFile()
 }
 
@@ -41,9 +44,13 @@ var (
 	}
 )
 
-func cmd() {
+// Cmd
+/**
+ * @Description:
+ */
+func Cmd() {
 	plugin := leafbot.NewPlugin("课程表")
-	//plugin.SetHelp(map[string]string{
+	// plugin.SetHelp(map[string]string{
 	//	"课表":            "获取当前账号所绑定的课表的今日课表",
 	//	"课表列表":          "查看bot所记录的课表列表",
 	//	"绑定":            "绑定当前账号到一个课表，例如：绑定 19网工.yml",
@@ -94,7 +101,7 @@ func cmd() {
 		Rules:  nil,
 	}).Handle(func(ctx *leafbot.Context) {
 		lock.Lock()
-		value, ok := binds[int64(ctx.Event.UserId)]
+		value, ok := binds[ctx.Event.UserId]
 		lock.Unlock()
 		var file string
 		if ok {
@@ -104,7 +111,7 @@ func cmd() {
 		}
 		week, day := getWeek(time.Now())
 		log.Infoln(fmt.Sprintf("当前第%d周周%d", week, day))
-		if len(ctx.State.Args) > 0 && ctx.State.Args[0] == "all" {
+		if len(ctx.State.Args) > 0 && ctx.State.Args[0] == ALL {
 			dir, err := os.ReadDir("./config/course/")
 			if err != nil {
 				return
@@ -172,7 +179,7 @@ func cmd() {
 			return
 		}
 		week, day := getWeek(time.Now().AddDate(0, 0, i))
-		if len(ctx.State.Args) > 0 && ctx.State.Args[0] == "all" {
+		if len(ctx.State.Args) > 0 && ctx.State.Args[0] == ALL {
 			dir, err := os.ReadDir("./config/course/")
 			if err != nil {
 				return
@@ -201,7 +208,7 @@ func cmd() {
 
 	plugin.OnRegex(`^(\d+)周周(.*?)课表`).Handle(func(ctx *leafbot.Context) {
 		lock.Lock()
-		value, ok := binds[int64(ctx.Event.UserId)]
+		value, ok := binds[ctx.Event.UserId]
 		lock.Unlock()
 		var file string
 		if ok {
@@ -218,7 +225,7 @@ func cmd() {
 			ctx.Event.Send("请输入正确的内容")
 			return
 		}
-		if len(ctx.State.Args) > 0 && ctx.State.Args[0] == "all" {
+		if len(ctx.State.Args) > 0 && ctx.State.Args[0] == ALL {
 			dir, err := os.ReadDir("./config/course/")
 			if err != nil {
 				return
@@ -245,8 +252,91 @@ func cmd() {
 		ctx.Event.Send(message.Image("base64://" + draw(course)))
 	})
 
+	plugin.OnCommand("添加课程", leafbot.Option{
+		Weight: 10,
+		Block:  true,
+		Allies: nil,
+		Rules:  []leafbot.Rule{leafbot.OnlySuperUser},
+	}).Handle(func(ctx *leafbot.Context) {
+		only := func(ctx1 *leafbot.Context) bool {
+			if ctx1.UserID != ctx.UserID || ctx1.GroupID != ctx.GroupID {
+				return false
+			}
+			return true
+		}
+		var courses []Course
+		ctx.Send(message.Text("请输入课程id："))
+		event, err := ctx.GetOneEvent(only)
+		if err != nil {
+			return
+		}
+		id, _ := strconv.Atoi(event.Message.ExtractPlainText())
+		ctx.Send(message.Text("请输入课程名称："))
+		name, err := ctx.GetOneEvent(only)
+		if err != nil {
+			return
+		}
+		ctx.Send(message.Text("请输入教师名称："))
+		teachName, err := ctx.GetOneEvent(only)
+		if err != nil {
+			return
+		}
+		ctx.Send(message.Text("请输入上课地点："))
+		location, err := ctx.GetOneEvent(only)
+		if err != nil {
+			return
+		}
+
+		ctx.Send(message.Text("请输入课程位于周几："))
+		wTemp, err := ctx.GetOneEvent(only)
+		if err != nil {
+			return
+		}
+
+		ctx.Send(message.Text("请输入上课节数："))
+		timesTemp, err := ctx.GetOneEvent(only)
+		if err != nil {
+			return
+		}
+		times := strings.Split(timesTemp.Message.ExtractPlainText(), ",")
+		ctx.Send(message.Text("请输入上课周数："))
+		weekTemp, err := ctx.GetOneEvent(only)
+		if err != nil {
+			return
+		}
+		weeks := strings.Split(weekTemp.Message.ExtractPlainText(), ",")
+		var w []int
+		for _, week := range weeks {
+			w1, _ := strconv.Atoi(week)
+			w = append(w, w1)
+		}
+		for _, t := range times {
+			c2 := new(Course)
+			c2.ID = id
+			c2.Name = name.Message.ExtractPlainText()
+			c2.Location = location.Message.ExtractPlainText()
+			c2.Teacher = teachName.Message.ExtractPlainText()
+			t1, _ := strconv.Atoi(t)
+			c2.Time = t1
+			c2.Weeks = w
+			courses = append(courses, *c2)
+		}
+		file, ok := binds[ctx.UserID]
+		if !ok {
+			file = defaultFile
+		}
+		courseFromYaml, _ := getCourseFromYaml(file)
+		// 新增的课程位于周几
+		w2, ok := weekTable[wTemp.Message.ExtractPlainText()]
+		if !ok {
+			return
+		}
+		courseFromYaml[w2] = append(courseFromYaml[w2], courses...)
+		toFile(courseFromYaml, "./config/course/"+file)
+
+	})
 	plugin.OnCommand("我的绑定").Handle(func(ctx *leafbot.Context) {
-		value, ok := binds[int64(ctx.Event.UserId)]
+		value, ok := binds[ctx.Event.UserId]
 		if ok {
 			ctx.Event.Send(message.Text("你的绑定信息为：\n" + value))
 		} else {
@@ -295,7 +385,7 @@ func loadFile() {
 	if err != nil {
 		return
 	}
-	err = os.WriteFile("./config/course.yml", data, 0o666)
+	err = os.WriteFile("./config/course.yml", data, 0666)
 	if err != nil {
 		return
 	}

@@ -72,9 +72,7 @@ func parseXlsx(file string) (map[int][]Course, error) {
 			//value = strings.ReplaceAll(value, " ", "")
 			if value != "" {
 				i2 := parse(value + "\n")
-				for _, course := range i2 {
-					courses = append(courses, course)
-				}
+				courses = append(courses, i2...)
 			}
 		}
 		contents[index+1] = courses
@@ -144,18 +142,20 @@ func parseTime(data string) []int {
 }
 
 func parseWeek(data string) []int {
+	fmt.Println(data)
 	var weeks []int
 	data = strings.ReplaceAll(data, "周", "")
+	dan := "all"
+	if strings.Contains(data, "单") {
+		dan = "dan"
+		data = strings.ReplaceAll(data, "单", "")
+	} else if strings.Contains(data, "双") {
+		dan = "shuang"
+		data = strings.ReplaceAll(data, "双", "")
+	}
 	contents := strings.Split(data, ",")
+
 	for _, content := range contents {
-		dan := "all"
-		if strings.Contains(content, "单") {
-			dan = "dan"
-			content = strings.ReplaceAll(content, "单", "")
-		} else if strings.Contains(content, "双") {
-			dan = "shuang"
-			content = strings.ReplaceAll(content, "双", "")
-		}
 
 		week, err := strconv.Atoi(content)
 		if err != nil {

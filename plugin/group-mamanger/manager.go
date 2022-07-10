@@ -191,11 +191,11 @@ func UserAdminPermission(ctx *leafbot.Context) bool {
 		return true
 	}
 
-	if ctx.Event.UserId == leafbot.GetLeafConfig().Admin {
+	if ctx.Event.UserId == leafbot.GetConfig().Admin {
 		return true
 	}
 
-	for _, user := range leafbot.GetLeafConfig().SuperUser {
+	for _, user := range leafbot.GetConfig().SuperUser {
 		if user == ctx.Event.UserId {
 			return true
 		}
@@ -206,7 +206,7 @@ func UserAdminPermission(ctx *leafbot.Context) bool {
 }
 
 func UserSuperUser(ctx *leafbot.Context) bool {
-	for _, user := range leafbot.GetLeafConfig().SuperUser {
+	for _, user := range leafbot.GetConfig().SuperUser {
 		if user == ctx.Event.UserId {
 			return true
 		}

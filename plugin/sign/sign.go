@@ -8,6 +8,8 @@ import (
 	"github.com/huoxue1/leafbot"
 	"github.com/huoxue1/leafbot/message"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/huoxue1/fan/plugin/model"
 )
 
 func init() {
@@ -29,9 +31,9 @@ func do() {
 		Block:  true,
 		Allies: []string{"我的积分"},
 	}).Handle(func(ctx *leafbot.Context) {
-		s := new(Sign)
+		s := new(model.Sign)
 		s.QQ = int64(ctx.Event.UserId)
-		err := query(s)
+		err := model.Query(s)
 		if err != nil {
 			return
 		}
@@ -42,10 +44,10 @@ func do() {
 }
 
 func sign(ctx *leafbot.Context) {
-	s := new(Sign)
-	s.QQ = int64(ctx.Event.UserId)
-	haveContent(int64(ctx.Event.UserId))
-	err := query(s)
+	s := new(model.Sign)
+	s.QQ = ctx.Event.UserId
+	model.HavaContent(ctx.Event.UserId)
+	err := model.Query(s)
 	if err != nil {
 		log.Errorln("查询个人信息失败")
 		log.Errorln(err.Error())
@@ -62,7 +64,7 @@ func sign(ctx *leafbot.Context) {
 	}
 	s.LastSign = time.Now().Unix()
 
-	update(*s)
+	_ = model.Update(*s)
 	ctx.Send(append(message.Message{},
 		message.Image(fmt.Sprintf("http://q1.qlogo.cn/g?b=qq&nk=%d&s=640", ctx.Event.UserId)).Add("cache", 0),
 		message.Text(fmt.Sprintf("恭喜你，签到成功,积分增加%d,当前共有积分%d,已连续签到%d天", n, s.Fraction, s.ContinueSign)),
