@@ -133,16 +133,16 @@ func search(ctx *leafbot.Context) {
 					ctx.Send(message.Text(fmt.Sprintf("正在为你下载小说，已扣除积分%d，剩余积分%d", 2*len(gets), s.Fraction)))
 					for _, get := range gets {
 						index, _ := strconv.Atoi(get)
-						if index < 0 || index >= len(files) {
+						if index < 0 || index > len(files)+1 {
 							return
 						} else {
-							url := files[index]["url"]
-							err := utils.DownloadFile(url, "./temp/"+files[index]["name"])
+							url := files[index-1]["url"]
+							err := utils.DownloadFile(url, "./temp/"+files[index-1]["name"])
 							if err != nil {
 								continue
 							}
 							dir, _ := os.Getwd()
-							ctx.UploadPrivateFile(ctx.UserID, fmt.Sprintf("%v/temp/%v", dir, files[index]["name"]), files[index]["name"])
+							ctx.UploadPrivateFile(ctx.UserID, fmt.Sprintf("%v/temp/%v", dir, files[index-1]["name"]), files[index-1]["name"])
 						}
 					}
 					return
