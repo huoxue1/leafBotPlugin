@@ -13,6 +13,7 @@ import (
 )
 
 func draw(courses []Course) string {
+
 	file, err := os.OpenFile("./config/model.png", os.O_RDONLY, 0o666)
 	if err != nil {
 		return ""

@@ -1,23 +1,27 @@
 package model
 
 import (
-	"fmt"
+	"errors"
+	"github.com/glebarez/sqlite"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"time"
 
-	_ "github.com/go-sql-driver/mysql"
-	log "github.com/sirupsen/logrus"
-
-	"github.com/huoxue1/fan/utils/sql"
+	_ "github.com/glebarez/sqlite"
+	_ "gorm.io/driver/mysql"
 )
 
 type Sign struct {
-	QQ           int64 `json:"qq" db:"qq"`                       // qq号
+	QQ           int64 `json:"qq" db:"qq" gorm:"primaryKey"`     // qq号
 	LastSign     int64 `json:"last_sign" db:"last_sign"`         // 上次签到时间戳
 	ContinueSign int   `json:"continue_sign" db:"continue_sign"` // 连续签到
 	Fraction     int64 `json:"fraction" db:"fraction"`           // 积分
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
 }
 
 var (
-	db *sql.Sqlite
+	db *gorm.DB
 )
 
 func UpdateFraction(qq int64, fraction int64) {
@@ -29,47 +33,27 @@ func UpdateFraction(qq int64, fraction int64) {
 	_ = update(*s)
 }
 
-func init() {
-	Db := new(sql.Sqlite)
-	Db.DBPath = "./config/sign.db"
-	err := Db.Open()
-	if err != nil {
-		log.Errorln("打开数据库失败" + err.Error())
-		return
-	}
-	db = Db
-	createTable()
-}
+func InitDb(driver string, dsl string) (err error) {
 
-func createTable() {
-	err := db.Create("sign", &Sign{})
-	if err != nil {
-		log.Errorln(err.Error())
-		return
+	switch driver {
+	case "sqlite":
+		db, err = gorm.Open(sqlite.Open(dsl), &gorm.Config{})
+	case "mysql":
+		db, err = gorm.Open(mysql.Open(dsl), &gorm.Config{})
+	default:
+		err = errors.New("不支持的数据库类型")
 	}
+	_ = db.AutoMigrate(&Sign{})
+	return
 }
 
 func add(sign Sign) error {
-	err := db.Insert("sign", &sign)
-	if err != nil {
-		log.Errorln(err.Error())
-		return err
-	}
-	return err
+	return db.Save(&sign).Error
 }
 
 // 查询表里面是否存在用户信息，若不存在则插入
 func haveContent(qq int64) {
-	defer func() {
-		recover()
-	}()
-	find := db.CanFind("sign", fmt.Sprintf("where qq=%d", qq))
-	if !find {
-		err := db.Insert("sign", &Sign{QQ: qq})
-		if err != nil {
-			return
-		}
-	}
+	db.Where(&Sign{QQ: qq}).FirstOrCreate(&Sign{QQ: qq, Fraction: 10, LastSign: time.Now().AddDate(0, 0, -1).Unix(), ContinueSign: 0})
 }
 
 func HavaContent(qq int64) {
@@ -82,27 +66,16 @@ func Query(sign2 *Sign) error {
 
 func query(sign *Sign) error {
 	haveContent(sign.QQ)
-	err := db.Find("sign", sign, fmt.Sprintf("where qq=%v", sign.QQ))
-	if err != nil {
-		return err
-	}
-	return err
+	return db.Find(sign).Error
 }
 func Update(sign2 Sign) error {
 	return update(sign2)
 }
 
 func update(sign Sign) error {
-	_, err := db.DB.Exec("update sign set continue_sign=?,last_sign=?,fraction=? where qq=?", sign.ContinueSign, sign.LastSign, sign.Fraction, sign.QQ)
-	if err != nil {
-		return err
-	}
-	return err
+	return db.Save(&sign).Error
 }
 
 func delete(qq int64) {
-	err := db.Del("sign", fmt.Sprintf("where qq=%d", qq))
-	if err != nil {
-		return
-	}
+	db.Table("sign").Where("qq = ?", qq).Delete(&Sign{})
 }

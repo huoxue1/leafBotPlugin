@@ -13,6 +13,11 @@ type Config struct {
 		UploadSecret  string `json:"upload_secret" yaml:"upload_secret"`
 	} `json:"fiction" yaml:"fiction"`
 
+	Model struct {
+		Driver string `json:"driver" yaml:"driver"`
+		Dsl    string `json:"dsl" yaml:"dsl"`
+	} `json:"model" yaml:"model"`
+
 	Bot struct {
 		NickName  string  `json:"nick_name" yaml:"nick_name"`
 		SuperUser []int64 `json:"super_user" yaml:"super_user"`
